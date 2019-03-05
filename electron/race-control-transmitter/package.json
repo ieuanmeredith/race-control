@@ -1,6 +1,6 @@
 {
-  "name": "race-control",
-  "productName": "race-control",
+  "name": "race-control-transmitter",
+  "productName": "race-control-transmitter",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.ts",
@@ -32,7 +32,7 @@
         "packageManager": "npm"
       },
       "electronWinstallerConfig": {
-        "name": "race_control"
+        "name": "race_control_transmitter"
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
@@ -42,7 +42,7 @@
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "racecontrol"
+        "name": "racecontroltransmitter"
       }
     }
   },
