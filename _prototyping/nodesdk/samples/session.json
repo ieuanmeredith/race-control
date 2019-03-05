@@ -1,0 +1,1423 @@
+{
+    "timestamp": "2019-03-05T10:14:41.010Z",
+    "data": {
+        "WeekendInfo": {
+            "TrackName": "limerock full",
+            "TrackID": 1,
+            "TrackLength": "2.36 km",
+            "TrackDisplayName": "Lime Rock Park",
+            "TrackDisplayShortName": "Lime Rock",
+            "TrackConfigName": "Full Course",
+            "TrackCity": "Lakeville",
+            "TrackCountry": "USA",
+            "TrackAltitude": "164.01 m",
+            "TrackLatitude": "41.928641 m",
+            "TrackLongitude": "-73.381050 m",
+            "TrackNorthOffset": "0.4058 rad",
+            "TrackNumTurns": 7,
+            "TrackPitSpeedLimit": "72.00 kph",
+            "TrackType": "road course",
+            "TrackDirection": "neutral",
+            "TrackWeatherType": "Generated / Dynamic Sky",
+            "TrackSkies": "Partly Cloudy",
+            "TrackSurfaceTemp": "39.69 C",
+            "TrackAirTemp": "25.44 C",
+            "TrackAirPressure": "29.34 Hg",
+            "TrackWindVel": "1.90 m/s",
+            "TrackWindDir": "3.31 rad",
+            "TrackRelativeHumidity": "47 %",
+            "TrackFogLevel": "0 %",
+            "TrackCleanup": 1,
+            "TrackDynamicTrack": 1,
+            "SeriesID": 135,
+            "SeasonID": 2423,
+            "SessionID": 108171088,
+            "SubSessionID": 26328129,
+            "LeagueID": 0,
+            "Official": 1,
+            "RaceWeek": 0,
+            "EventType": "Practice",
+            "Category": "Road",
+            "SimMode": "full",
+            "TeamRacing": 0,
+            "MinDrivers": 0,
+            "MaxDrivers": 1,
+            "DCRuleSet": "None",
+            "QualifierMustStartRace": 0,
+            "NumCarClasses": 1,
+            "NumCarTypes": 1,
+            "HeatRacing": 0,
+            "WeekendOptions": {
+                "NumStarters": 20,
+                "StartingGrid": "2x2 inline pole on left",
+                "QualifyScoring": "best lap",
+                "CourseCautions": "off",
+                "StandingStart": 1,
+                "Restarts": "single file",
+                "WeatherType": "Generated / Dynamic Sky",
+                "Skies": "Partly Cloudy",
+                "WindDirection": "N",
+                "WindSpeed": "3.22 km/h",
+                "WeatherTemp": "25.56 C",
+                "RelativeHumidity": "55 %",
+                "FogLevel": "0 %",
+                "TimeOfDay": "12:38 pm",
+                "Date": "2019-04-01T00:00:00.000Z",
+                "Unofficial": 0,
+                "CommercialMode": "consumer",
+                "NightMode": "variable",
+                "IsFixedSetup": 0,
+                "StrictLapsChecking": "default",
+                "HasOpenRegistration": 1,
+                "HardcoreLevel": 1,
+                "NumJokerLaps": 0,
+                "IncidentLimit": "unlimited"
+            },
+            "TelemetryOptions": {
+                "TelemetryDiskFile": ""
+            }
+        },
+        "SessionInfo": {
+            "Sessions": [
+                {
+                    "SessionNum": 0,
+                    "SessionLaps": "unlimited",
+                    "SessionTime": "3600.0000 sec",
+                    "SessionNumLapsToAvg": 0,
+                    "SessionType": "Practice",
+                    "SessionTrackRubberState": "moderate usage",
+                    "SessionName": "PRACTICE",
+                    "SessionSubType": null,
+                    "SessionSkipped": 0,
+                    "SessionRunGroupsUsed": 0,
+                    "ResultsPositions": null,
+                    "ResultsFastestLap": [
+                        {
+                            "CarIdx": 255,
+                            "FastestLap": 0,
+                            "FastestTime": -1
+                        }
+                    ],
+                    "ResultsAverageLapTime": -1,
+                    "ResultsNumCautionFlags": 0,
+                    "ResultsNumCautionLaps": 0,
+                    "ResultsNumLeadChanges": 0,
+                    "ResultsLapsComplete": -1,
+                    "ResultsOfficial": 0
+                }
+            ]
+        },
+        "CameraInfo": {
+            "Groups": [
+                {
+                    "GroupNum": 1,
+                    "GroupName": "Nose",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamNose"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 2,
+                    "GroupName": "Gearbox",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamGearbox"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 3,
+                    "GroupName": "Roll Bar",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamRoll Bar"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 4,
+                    "GroupName": "LF Susp",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamLF Susp"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 5,
+                    "GroupName": "LR Susp",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamLR Susp"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 6,
+                    "GroupName": "Gyro",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamGyro"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 7,
+                    "GroupName": "RF Susp",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamRF Susp"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 8,
+                    "GroupName": "RR Susp",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamRR Susp"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 9,
+                    "GroupName": "Cockpit",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamCockpit"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 10,
+                    "GroupName": "Scenic",
+                    "IsScenic": true,
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "Scenic_00"
+                        },
+                        {
+                            "CameraNum": 2,
+                            "CameraName": "Scenic_01"
+                        },
+                        {
+                            "CameraNum": 3,
+                            "CameraName": "Scenic_03"
+                        },
+                        {
+                            "CameraNum": 4,
+                            "CameraName": "Scenic_04"
+                        },
+                        {
+                            "CameraNum": 5,
+                            "CameraName": "Scenic_05"
+                        },
+                        {
+                            "CameraNum": 6,
+                            "CameraName": "Scenic_06"
+                        },
+                        {
+                            "CameraNum": 7,
+                            "CameraName": "Scenic_07"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 11,
+                    "GroupName": "TV1",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamTV1_00"
+                        },
+                        {
+                            "CameraNum": 2,
+                            "CameraName": "CamTV1_01"
+                        },
+                        {
+                            "CameraNum": 3,
+                            "CameraName": "CamTV1_02"
+                        },
+                        {
+                            "CameraNum": 4,
+                            "CameraName": "CamTV1_03"
+                        },
+                        {
+                            "CameraNum": 5,
+                            "CameraName": "CamTV1_04"
+                        },
+                        {
+                            "CameraNum": 6,
+                            "CameraName": "CamTV1_05"
+                        },
+                        {
+                            "CameraNum": 7,
+                            "CameraName": "CamTV1_06"
+                        },
+                        {
+                            "CameraNum": 8,
+                            "CameraName": "CamTV1_07"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 12,
+                    "GroupName": "TV2",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamTV2_00"
+                        },
+                        {
+                            "CameraNum": 2,
+                            "CameraName": "CamTV2_01"
+                        },
+                        {
+                            "CameraNum": 3,
+                            "CameraName": "CamTV2_02"
+                        },
+                        {
+                            "CameraNum": 4,
+                            "CameraName": "CamTV2_03"
+                        },
+                        {
+                            "CameraNum": 5,
+                            "CameraName": "CamTV2_04"
+                        },
+                        {
+                            "CameraNum": 6,
+                            "CameraName": "CamTV2_05"
+                        },
+                        {
+                            "CameraNum": 7,
+                            "CameraName": "CamTV2_06"
+                        },
+                        {
+                            "CameraNum": 8,
+                            "CameraName": "CamTV2_07"
+                        },
+                        {
+                            "CameraNum": 9,
+                            "CameraName": "CamTV2_08"
+                        },
+                        {
+                            "CameraNum": 10,
+                            "CameraName": "CamTV2_09"
+                        },
+                        {
+                            "CameraNum": 11,
+                            "CameraName": "CamTV2_10"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 13,
+                    "GroupName": "TV3",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamTV3_00"
+                        },
+                        {
+                            "CameraNum": 2,
+                            "CameraName": "CamTV3_01"
+                        },
+                        {
+                            "CameraNum": 3,
+                            "CameraName": "CamTV3_02"
+                        },
+                        {
+                            "CameraNum": 4,
+                            "CameraName": "CamTV3_03"
+                        },
+                        {
+                            "CameraNum": 5,
+                            "CameraName": "CamTV3_04"
+                        },
+                        {
+                            "CameraNum": 6,
+                            "CameraName": "CamTV3_05"
+                        },
+                        {
+                            "CameraNum": 7,
+                            "CameraName": "CamTV3_06"
+                        },
+                        {
+                            "CameraNum": 8,
+                            "CameraName": "CamTV3_07"
+                        },
+                        {
+                            "CameraNum": 9,
+                            "CameraName": "CamTV3_08"
+                        },
+                        {
+                            "CameraNum": 10,
+                            "CameraName": "CamTV3_09"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 14,
+                    "GroupName": "Pit Lane",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamPit Lane"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 15,
+                    "GroupName": "Pit Lane 2",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamPit Lane 2"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 16,
+                    "GroupName": "Chopper",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamChopper"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 17,
+                    "GroupName": "Blimp",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamBlimp"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 18,
+                    "GroupName": "Chase",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamChase"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 19,
+                    "GroupName": "Far Chase",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamFar Chase"
+                        }
+                    ]
+                },
+                {
+                    "GroupNum": 20,
+                    "GroupName": "Rear Chase",
+                    "Cameras": [
+                        {
+                            "CameraNum": 1,
+                            "CameraName": "CamRear Chase"
+                        }
+                    ]
+                }
+            ]
+        },
+        "RadioInfo": {
+            "SelectedRadioNum": 0,
+            "Radios": [
+                {
+                    "RadioNum": 0,
+                    "HopCount": 1,
+                    "NumFrequencies": 6,
+                    "TunedToFrequencyNum": 0,
+                    "ScanningIsOn": 1,
+                    "Frequencies": [
+                        {
+                            "FrequencyNum": 0,
+                            "FrequencyName": "@ALLTEAMS",
+                            "Priority": 12,
+                            "CarIdx": -1,
+                            "EntryIdx": -1,
+                            "ClubID": 0,
+                            "CanScan": 1,
+                            "CanSquawk": 1,
+                            "Muted": 0,
+                            "IsMutable": 1,
+                            "IsDeletable": 0
+                        },
+                        {
+                            "FrequencyNum": 1,
+                            "FrequencyName": "@DRIVERS",
+                            "Priority": 15,
+                            "CarIdx": -1,
+                            "EntryIdx": -1,
+                            "ClubID": 0,
+                            "CanScan": 1,
+                            "CanSquawk": 0,
+                            "Muted": 0,
+                            "IsMutable": 1,
+                            "IsDeletable": 0
+                        },
+                        {
+                            "FrequencyNum": 2,
+                            "FrequencyName": "@TEAM",
+                            "Priority": 60,
+                            "CarIdx": 19,
+                            "EntryIdx": -1,
+                            "ClubID": 0,
+                            "CanScan": 1,
+                            "CanSquawk": 1,
+                            "Muted": 0,
+                            "IsMutable": 0,
+                            "IsDeletable": 0
+                        },
+                        {
+                            "FrequencyNum": 3,
+                            "FrequencyName": "@CLUB",
+                            "Priority": 20,
+                            "CarIdx": -1,
+                            "EntryIdx": -1,
+                            "ClubID": 36,
+                            "CanScan": 1,
+                            "CanSquawk": 1,
+                            "Muted": 0,
+                            "IsMutable": 1,
+                            "IsDeletable": 0
+                        },
+                        {
+                            "FrequencyNum": 4,
+                            "FrequencyName": "@RACECONTROL",
+                            "Priority": 80,
+                            "CarIdx": -1,
+                            "EntryIdx": -1,
+                            "ClubID": 0,
+                            "CanScan": 1,
+                            "CanSquawk": 0,
+                            "Muted": 0,
+                            "IsMutable": 0,
+                            "IsDeletable": 0
+                        },
+                        {
+                            "FrequencyNum": 5,
+                            "FrequencyName": "@PRIVATE",
+                            "Priority": 70,
+                            "CarIdx": -1,
+                            "EntryIdx": 19,
+                            "ClubID": 0,
+                            "CanScan": 1,
+                            "CanSquawk": 1,
+                            "Muted": 0,
+                            "IsMutable": 0,
+                            "IsDeletable": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        "DriverInfo": {
+            "DriverCarIdx": 19,
+            "DriverUserID": 287129,
+            "PaceCarIdx": -1,
+            "DriverHeadPosX": -0.416,
+            "DriverHeadPosY": 0.344,
+            "DriverHeadPosZ": 0.66,
+            "DriverCarIdleRPM": 875,
+            "DriverCarRedLine": 6850,
+            "DriverCarEngCylinderCount": 4,
+            "DriverCarFuelKgPerLtr": 0.75,
+            "DriverCarFuelMaxLtr": 44.987,
+            "DriverCarMaxFuelPct": 1,
+            "DriverCarSLFirstRPM": 6000,
+            "DriverCarSLShiftRPM": 6850,
+            "DriverCarSLLastRPM": 6850,
+            "DriverCarSLBlinkRPM": 7000,
+            "DriverPitTrkPct": 0.995804,
+            "DriverCarEstLapTime": 60.7102,
+            "DriverSetupName": "INVALID_LOADTYPE",
+            "DriverSetupIsModified": 0,
+            "DriverSetupLoadTypeName": "invalid",
+            "DriverSetupPassedTech": 0,
+            "DriverIncidentCount": 0,
+            "Drivers": [
+                {
+                    "CarIdx": 0,
+                    "UserName": "Alber Antich",
+                    "AbbrevName": "Antich, A",
+                    "Initials": "AA",
+                    "UserID": 363422,
+                    "TeamID": 0,
+                    "TeamName": "Alber Antich",
+                    "CarNumber": "1",
+                    "CarNumberRaw": 1,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1186,
+                    "LicLevel": 7,
+                    "LicSubLevel": 398,
+                    "LicString": "D 3.98",
+                    "LicColor": 16550439,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "17,000000,ffffff,372a75,000000",
+                    "HelmetDesignStr": "6,106ae0,ffffff,372a75",
+                    "SuitDesignStr": "28,f1732e,ffffff,372a75",
+                    "CarNumberDesignStr": "0,0,ffffff,2a3795,000000",
+                    "CarSponsor_1": 98,
+                    "CarSponsor_2": 50,
+                    "ClubName": "Iberia",
+                    "DivisionName": "Division 5",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 1,
+                    "UserName": "Timo Kulju",
+                    "AbbrevName": null,
+                    "Initials": null,
+                    "UserID": 100407,
+                    "TeamID": 0,
+                    "TeamName": "Timo Kulju",
+                    "CarNumber": "36",
+                    "CarNumberRaw": 36,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 2282,
+                    "LicLevel": 13,
+                    "LicSubLevel": 169,
+                    "LicString": "B 1.69",
+                    "LicColor": 50946,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "22,393a3c,044f67,cfcfcf;ffffff",
+                    "HelmetDesignStr": "2,cfcfcf,044f67,2b2b2b",
+                    "SuitDesignStr": "15,000000,044f67,cfcfcf",
+                    "CarNumberDesignStr": "0,0,ffcb05,000000,ffffff",
+                    "CarSponsor_1": 107,
+                    "CarSponsor_2": 1,
+                    "ClubName": "Finland",
+                    "DivisionName": "Division 3",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 2,
+                    "UserName": "Erik Sivertsen",
+                    "AbbrevName": null,
+                    "Initials": null,
+                    "UserID": 363804,
+                    "TeamID": 0,
+                    "TeamName": "Erik Sivertsen",
+                    "CarNumber": "3",
+                    "CarNumberRaw": 3,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 895,
+                    "LicLevel": 11,
+                    "LicSubLevel": 335,
+                    "LicString": "C 3.35",
+                    "LicColor": 16706564,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "1,111111,d7162d,efd600",
+                    "HelmetDesignStr": "1,111111,d7162d,efd600",
+                    "SuitDesignStr": "1,111111,d7162d,efd600",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "Scandinavia",
+                    "DivisionName": "Division 7",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 3,
+                    "UserName": "Twan Van den Beld",
+                    "AbbrevName": "Beld, T",
+                    "Initials": "TB",
+                    "UserID": 365100,
+                    "TeamID": 0,
+                    "TeamName": "Twan Van den Beld",
+                    "CarNumber": "4",
+                    "CarNumberRaw": 4,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 584,
+                    "LicLevel": 1,
+                    "LicSubLevel": 149,
+                    "LicString": "R 1.49",
+                    "LicColor": 16516870,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "1,f06e34,ffffff,111111",
+                    "HelmetDesignStr": "1,f06e34,ffffff,111111",
+                    "SuitDesignStr": "1,f06e34,ffffff,111111",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "Benelux",
+                    "DivisionName": "Rookie",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 4,
+                    "UserName": "Nuccio Rosana",
+                    "AbbrevName": null,
+                    "Initials": null,
+                    "UserID": 65689,
+                    "TeamID": 0,
+                    "TeamName": "Nuccio Rosana",
+                    "CarNumber": "00",
+                    "CarNumberRaw": 2000,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1226,
+                    "LicLevel": 11,
+                    "LicSubLevel": 364,
+                    "LicString": "C 3.64",
+                    "LicColor": 16706564,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "23,f6fdfe,ef0b0f,19851f;e7080b",
+                    "HelmetDesignStr": "2,000e81,f9e9e9,fc0706",
+                    "SuitDesignStr": "3,000e81,f9e9e9,fc0706",
+                    "CarNumberDesignStr": "0,0,ffffff,da1b1b,2b30e9",
+                    "CarSponsor_1": 1,
+                    "CarSponsor_2": 1,
+                    "ClubName": "Italy",
+                    "DivisionName": "Division 7",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 5,
+                    "UserName": "Javi Serrano",
+                    "AbbrevName": "Serrano, J",
+                    "Initials": "JS",
+                    "UserID": 298400,
+                    "TeamID": 0,
+                    "TeamName": "Javi Serrano",
+                    "CarNumber": "69",
+                    "CarNumberRaw": 69,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 2201,
+                    "LicLevel": 12,
+                    "LicSubLevel": 437,
+                    "LicString": "C 4.37",
+                    "LicColor": 16706564,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "4,f5ab00,ff0f0a,061289",
+                    "HelmetDesignStr": "1,ffb01f,ed2129,2a3795",
+                    "SuitDesignStr": "18,ed2129,f4b51a,2a3795",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 10,
+                    "CarSponsor_2": 94,
+                    "ClubName": "Iberia",
+                    "DivisionName": "Division 3",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 6,
+                    "UserName": "Hüseyin KELES",
+                    "AbbrevName": "KELES, H",
+                    "Initials": "HK",
+                    "UserID": 281187,
+                    "TeamID": 0,
+                    "TeamName": "Hüseyin KELES",
+                    "CarNumber": "7",
+                    "CarNumberRaw": 7,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 2067,
+                    "LicLevel": 11,
+                    "LicSubLevel": 335,
+                    "LicString": "C 3.35",
+                    "LicColor": 16706564,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "21,ffffff,c70008,f05300",
+                    "HelmetDesignStr": "51,000000,ffee47,111111",
+                    "SuitDesignStr": "12,0300c2,ffee47,111111",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "International",
+                    "DivisionName": "Division 3",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 7,
+                    "UserName": "Eddie Kalis",
+                    "AbbrevName": "Kalis, E",
+                    "Initials": "EK",
+                    "UserID": 362731,
+                    "TeamID": 0,
+                    "TeamName": "Eddie Kalis",
+                    "CarNumber": "25",
+                    "CarNumberRaw": 25,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1490,
+                    "LicLevel": 2,
+                    "LicSubLevel": 279,
+                    "LicString": "R 2.79",
+                    "LicColor": 16516870,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "15,d33d09,f0e0e0,bfb5ab,0a0b0a",
+                    "HelmetDesignStr": "35,e75923,555858,000000",
+                    "SuitDesignStr": "21,ffffff,000000,000000",
+                    "CarNumberDesignStr": "0,0,ebebea,777777,000000",
+                    "CarSponsor_1": 97,
+                    "CarSponsor_2": 83,
+                    "ClubName": "Benelux",
+                    "DivisionName": "Rookie",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 8,
+                    "UserName": "Ivan Farre",
+                    "AbbrevName": null,
+                    "Initials": null,
+                    "UserID": 365033,
+                    "TeamID": 0,
+                    "TeamName": "Ivan Farre",
+                    "CarNumber": "9",
+                    "CarNumberRaw": 9,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1021,
+                    "LicLevel": 2,
+                    "LicSubLevel": 253,
+                    "LicString": "R 2.53",
+                    "LicColor": 16516870,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "1,111111,cccccc,ed1c24",
+                    "HelmetDesignStr": "1,111111,cccccc,ed1c24",
+                    "SuitDesignStr": "1,111111,cccccc,ed1c24",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "Iberia",
+                    "DivisionName": "Rookie",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 9,
+                    "UserName": "Antonio Martinez Gil",
+                    "AbbrevName": "Gil, A",
+                    "Initials": "AG",
+                    "UserID": 350577,
+                    "TeamID": 0,
+                    "TeamName": "Antonio Martinez Gil",
+                    "CarNumber": "21",
+                    "CarNumberRaw": 21,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1330,
+                    "LicLevel": 6,
+                    "LicSubLevel": 288,
+                    "LicString": "D 2.88",
+                    "LicColor": 16550439,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "9,4a4a4a,b2101e,fafafa,000000",
+                    "HelmetDesignStr": "16,3b3b3b,151414,870d0d",
+                    "SuitDesignStr": "0,1b1b1d,8c8c8c,df3c3a",
+                    "CarNumberDesignStr": "0,0,e7e6e4,ed2129,0821d9",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "Iberia",
+                    "DivisionName": "Division 5",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 10,
+                    "UserName": "Emre Merzifonluoglu",
+                    "AbbrevName": "Merzifonluoglu, E",
+                    "Initials": "EM",
+                    "UserID": 364797,
+                    "TeamID": 0,
+                    "TeamName": "Emre Merzifonluoglu",
+                    "CarNumber": "23",
+                    "CarNumberRaw": 23,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1312,
+                    "LicLevel": 6,
+                    "LicSubLevel": 254,
+                    "LicString": "D 2.54",
+                    "LicColor": 16550439,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "11,ffffff,ed2129,000000",
+                    "HelmetDesignStr": "1,ffffff,ed2129,111111",
+                    "SuitDesignStr": "1,ffffff,ed2129,111111",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "International",
+                    "DivisionName": "Rookie",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 11,
+                    "UserName": "Kari-Pekka Vieltojärvi",
+                    "AbbrevName": "Vieltojärvi, K",
+                    "Initials": "KV",
+                    "UserID": 312746,
+                    "TeamID": 0,
+                    "TeamName": "Kari-Pekka Vieltojärvi",
+                    "CarNumber": "12",
+                    "CarNumberRaw": 12,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1859,
+                    "LicLevel": 17,
+                    "LicSubLevel": 197,
+                    "LicString": "A 1.97",
+                    "LicColor": 87003,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "7,3c4cc8,ffffff,fd497f",
+                    "HelmetDesignStr": "1,ed2129,2a3795,2a3795",
+                    "SuitDesignStr": "1,4bd3fd,013990,ffffff",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "Finland",
+                    "DivisionName": "Division 4",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 12,
+                    "UserName": "Fred Harper",
+                    "AbbrevName": "Harper, F",
+                    "Initials": "FH",
+                    "UserID": 364892,
+                    "TeamID": 0,
+                    "TeamName": "Fred Harper",
+                    "CarNumber": "13",
+                    "CarNumberRaw": 13,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1228,
+                    "LicLevel": 2,
+                    "LicSubLevel": 285,
+                    "LicString": "R 2.85",
+                    "LicColor": 16516870,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "23,000000,000000,ffdd14,ebde0a",
+                    "HelmetDesignStr": "42,000000,ffdd14,000000",
+                    "SuitDesignStr": "23,000000,ffdd14,ffdd14",
+                    "CarNumberDesignStr": "0,0,000000,000000,ffdd14",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "UK and I",
+                    "DivisionName": "Division 1",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 13,
+                    "UserName": "Francisco Javier Cano Rodríguez",
+                    "AbbrevName": "Rodríguez, F",
+                    "Initials": "FR",
+                    "UserID": 318286,
+                    "TeamID": 0,
+                    "TeamName": "Francisco Javier Cano Rodríguez",
+                    "CarNumber": "14",
+                    "CarNumberRaw": 14,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 2169,
+                    "LicLevel": 16,
+                    "LicSubLevel": 450,
+                    "LicString": "B 4.50",
+                    "LicColor": 50946,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "12,ffffff,18f771,2a3795",
+                    "HelmetDesignStr": "64,0337ba,09950e,ffffff",
+                    "SuitDesignStr": "1,09953a,ffffff,0040ff",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 97,
+                    "CarSponsor_2": 102,
+                    "ClubName": "Iberia",
+                    "DivisionName": "Division 3",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 14,
+                    "UserName": "Joaquin Moreno",
+                    "AbbrevName": "Moreno, J",
+                    "Initials": "JM",
+                    "UserID": 331646,
+                    "TeamID": 0,
+                    "TeamName": "Joaquin Moreno",
+                    "CarNumber": "15",
+                    "CarNumberRaw": 15,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1726,
+                    "LicLevel": 14,
+                    "LicSubLevel": 273,
+                    "LicString": "B 2.73",
+                    "LicColor": 50946,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "9,000000,000000,000000,ffffff",
+                    "HelmetDesignStr": "58,1bd2f3,fbf9f9,da4325",
+                    "SuitDesignStr": "22,000000,d78d14,111111",
+                    "CarNumberDesignStr": "0,0,000000,000000,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "DE-AT-CH",
+                    "DivisionName": "Division 4",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 15,
+                    "UserName": "David Besada Perez",
+                    "AbbrevName": null,
+                    "Initials": null,
+                    "UserID": 357811,
+                    "TeamID": 0,
+                    "TeamName": "David Besada Perez",
+                    "CarNumber": "11",
+                    "CarNumberRaw": 11,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1584,
+                    "LicLevel": 10,
+                    "LicSubLevel": 255,
+                    "LicString": "C 2.55",
+                    "LicColor": 16706564,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "16,ffffff,000000,067be5",
+                    "HelmetDesignStr": "68,000000,ffffff,1f7def",
+                    "SuitDesignStr": "23,ffffff,000000,1798ee",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "Iberia",
+                    "DivisionName": "Division 4",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 16,
+                    "UserName": "Julien Griffiths",
+                    "AbbrevName": "Griffiths, J",
+                    "Initials": "JG",
+                    "UserID": 32720,
+                    "TeamID": 0,
+                    "TeamName": "Julien Griffiths",
+                    "CarNumber": "17",
+                    "CarNumberRaw": 17,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 3158,
+                    "LicLevel": 18,
+                    "LicSubLevel": 249,
+                    "LicString": "A 2.49",
+                    "LicColor": 87003,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "5,f7feee,a30100,2a0b97",
+                    "HelmetDesignStr": "66,f7feee,a30100,2a0b97",
+                    "SuitDesignStr": "12,fd3f05,fefced,666666",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 50,
+                    "CarSponsor_2": 97,
+                    "ClubName": "France",
+                    "DivisionName": "Division 2",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 17,
+                    "UserName": "Adrian Quaife-Hobbs2",
+                    "AbbrevName": "Quaife-Hobbs2, A",
+                    "Initials": "AQ",
+                    "UserID": 321937,
+                    "TeamID": 0,
+                    "TeamName": "Adrian Quaife-Hobbs2",
+                    "CarNumber": "18",
+                    "CarNumberRaw": 18,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1595,
+                    "LicLevel": 6,
+                    "LicSubLevel": 243,
+                    "LicString": "D 2.43",
+                    "LicColor": 16550439,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "1,4bd3fd,ffffff,013990",
+                    "HelmetDesignStr": "1,4bd3fd,ffffff,013990",
+                    "SuitDesignStr": "1,4bd3fd,ffffff,013990",
+                    "CarNumberDesignStr": "0,0,ffffff,777777,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "UK and I",
+                    "DivisionName": "Division 4",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 18,
+                    "UserName": "Charalampos Saoulidis",
+                    "AbbrevName": "Saoulidis, C",
+                    "Initials": "CS",
+                    "UserID": 330309,
+                    "TeamID": 0,
+                    "TeamName": "Charalampos Saoulidis",
+                    "CarNumber": "19",
+                    "CarNumberRaw": 19,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 1223,
+                    "LicLevel": 18,
+                    "LicSubLevel": 245,
+                    "LicString": "A 2.45",
+                    "LicColor": 87003,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "5,299be0,ffffff,2a3795",
+                    "HelmetDesignStr": "60,474eff,111111,ffffff",
+                    "SuitDesignStr": "24,1e37f1,111111,0300c2",
+                    "CarNumberDesignStr": "0,0,ffffff,ed2129,2a3795",
+                    "CarSponsor_1": 97,
+                    "CarSponsor_2": 129,
+                    "ClubName": "International",
+                    "DivisionName": "Division 6",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                },
+                {
+                    "CarIdx": 19,
+                    "UserName": "Ieuan Meredith",
+                    "AbbrevName": "Meredith, I",
+                    "Initials": "IM",
+                    "UserID": 287129,
+                    "TeamID": 0,
+                    "TeamName": "Ieuan Meredith",
+                    "CarNumber": "20",
+                    "CarNumberRaw": 20,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 2418,
+                    "LicLevel": 20,
+                    "LicSubLevel": 413,
+                    "LicString": "A 4.13",
+                    "LicColor": 87003,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "9,ffffff,17b548,f20715,171717",
+                    "HelmetDesignStr": "22,1c1c1c,ffffff,ffffff",
+                    "SuitDesignStr": "3,000000,191919,b9ff0f",
+                    "CarNumberDesignStr": "0,0,ffffff,919191,000000",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "UK and I",
+                    "DivisionName": "Division 2",
+                    "CurDriverIncidentCount": 0,
+                    "TeamIncidentCount": 0
+                },
+                {
+                    "CarIdx": 20,
+                    "UserName": "Juann Tovar",
+                    "AbbrevName": null,
+                    "Initials": null,
+                    "UserID": 343487,
+                    "TeamID": 0,
+                    "TeamName": "Juann Tovar",
+                    "CarNumber": "94",
+                    "CarNumberRaw": 94,
+                    "CarPath": "mx5 mx52016",
+                    "CarClassID": 74,
+                    "CarID": 67,
+                    "CarIsPaceCar": 0,
+                    "CarIsAI": 0,
+                    "CarScreenName": "Mazda MX-5 Cup",
+                    "CarScreenNameShort": "MX-5 Cup",
+                    "CarClassShortName": "MX5 Cup 2016",
+                    "CarClassRelSpeed": 33,
+                    "CarClassLicenseLevel": 0,
+                    "CarClassMaxFuelPct": "1.000 %",
+                    "CarClassWeightPenalty": "0.000 kg",
+                    "CarClassColor": 16777215,
+                    "IRating": 2328,
+                    "LicLevel": 9,
+                    "LicSubLevel": 149,
+                    "LicString": "C 1.49",
+                    "LicColor": 16706564,
+                    "IsSpectator": 0,
+                    "CarDesignStr": "16,000000,00f0cd,0d0c0c,ffffff",
+                    "HelmetDesignStr": "1,1a4b9b,dff000,ffffff",
+                    "SuitDesignStr": "1,1a4b9b,dff000,ffffff",
+                    "CarNumberDesignStr": "0,0,000000,777777,38ffe0",
+                    "CarSponsor_1": 0,
+                    "CarSponsor_2": 0,
+                    "ClubName": "Iberia",
+                    "DivisionName": "Division 2",
+                    "CurDriverIncidentCount": -1,
+                    "TeamIncidentCount": -1
+                }
+            ]
+        },
+        "SplitTimeInfo": {
+            "Sectors": [
+                {
+                    "SectorNum": 0,
+                    "SectorStartPct": 0
+                },
+                {
+                    "SectorNum": 1,
+                    "SectorStartPct": 0.23178
+                },
+                {
+                    "SectorNum": 2,
+                    "SectorStartPct": 0.479317
+                },
+                {
+                    "SectorNum": 3,
+                    "SectorStartPct": 0.633767
+                }
+            ]
+        }
+    }
+}

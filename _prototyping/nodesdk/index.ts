@@ -2,8 +2,8 @@ const irsdk: any = require("node-irsdk");
 const fs: any = require("fs");
 
 irsdk.init({
-  telemetryUpdateInterval: 1000,
-  sessionInfoUpdateInterval: 2000
+  telemetryUpdateInterval: 10000,
+  sessionInfoUpdateInterval: 10000
 });
 
 const iracing: any = irsdk.getInstance();
@@ -21,14 +21,14 @@ iracing.on("Disconnected", function (): void {
 
 iracing.on("TelemetryDescription", function (data: any): void {
   console.log("got TelemetryDescription");
-  console.log(data);
 });
 
 iracing.on("Telemetry", function (data: any): void {
   console.log("got Telemetry");
+  console.log(JSON.stringify(data));
 });
 
 iracing.on("SessionInfo", function (data: any): void {
   console.log("got SessionInfo");
-  console.log(data);
+  console.log(JSON.stringify(data));
 });
