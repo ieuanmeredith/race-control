@@ -1,9 +1,21 @@
 const irsdk: any = require("node-irsdk");
 const fs: any = require("fs");
 
+import * as io from "socket.io-client";
+
+const socket: SocketIOClient.Socket = io("http://localhost:3000/receiver");
+
+socket.on("connect", () => {
+  if(socket.connected) {
+    console.log("Connected to the Race Control server");
+  } else {
+    console.log("Failed to connect to Race Control server");
+  }
+});
+
 irsdk.init({
-  telemetryUpdateInterval: 10000,
-  sessionInfoUpdateInterval: 10000
+  telemetryUpdateInterval: 0,
+  sessionInfoUpdateInterval: 2000
 });
 
 const iracing: any = irsdk.getInstance();
@@ -24,11 +36,9 @@ iracing.on("TelemetryDescription", function (data: any): void {
 });
 
 iracing.on("Telemetry", function (data: any): void {
-  console.log("got Telemetry");
-  console.log(JSON.stringify(data));
+  socket.emit("telemetry", data);
 });
 
 iracing.on("SessionInfo", function (data: any): void {
   console.log("got SessionInfo");
-  console.log(JSON.stringify(data));
 });
