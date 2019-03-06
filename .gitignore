@@ -2,3 +2,6 @@
 /electron/race-control-transmitter/node_modules
 /electron/race-control-transmitter/package-lock.json
 /server/node_modules
+/src/_prototyping/nodesdk/node_modules
+/src/electron/race-control-transmitter/node_modules
+/src/server/node_modules
