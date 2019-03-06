@@ -8,3 +8,6 @@
 src/server/package-lock.json
 src/electron/race-control-transmitter/package-lock.json
 src/_prototyping/nodesdk/package-lock.json
+/src/_prototyping/nodesdk/package-lock.json
+/src/electron/race-control-transmitter/package-lock.json
+/src/server/package-lock.json
