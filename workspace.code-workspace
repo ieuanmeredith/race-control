@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "src\\_prototyping\\nodesdk"
+		},
+		{
+			"path": "src\\server"
+		},
+		{
+			"path": "src\\electron\\race-control-transmitter"
+		}
+	]
+}
