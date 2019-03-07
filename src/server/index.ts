@@ -15,7 +15,7 @@ const receiver: SocketIO.Namespace =
     console.log("a transmitter connected");
 
     socket.on("telemetry", (data) => {
-      console.log(Math.trunc(data.values.Throttle * 100));
+      io.of("web").emit("message", { message: Math.trunc(data.values.Throttle * 100) });
     });
 });
 
