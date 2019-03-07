@@ -10,6 +10,7 @@ import { SocketService } from "./socket.service";
 export class AppComponent implements OnInit {
   public title = "race-control-app";
   public socket: any;
+  public throttle_perc: number;
 
   constructor(private socketService: SocketService) { }
 
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
     this.socket = this.socketService.onMessage()
       .subscribe((data: any) => {
         console.log(data);
+        this.throttle_perc = data.message;
       });
 
     this.socketService.onEvent("connect")
