@@ -1,11 +1,15 @@
 {
-  "extends": "../tslint.json",
+  "extends": "tslint:recommended",
   "rules": {
     "directive-selector": [
       true,
       "attribute",
       "app",
       "camelCase"
+    ],
+    "no-console": [
+      true,
+      "trace"
     ],
     "component-selector": [
       true,
