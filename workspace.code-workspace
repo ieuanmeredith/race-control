@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "src\\electron\\race-control-transmitter"
+		},
+		{
+			"path": "src\\web\\race-control-app"
 		}
 	]
 }
