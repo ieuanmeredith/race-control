@@ -11,3 +11,50 @@ src/_prototyping/nodesdk/package-lock.json
 /src/_prototyping/nodesdk/package-lock.json
 /src/electron/race-control-transmitter/package-lock.json
 /src/server/package-lock.json
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/src/web/race-control-app/dist
+/src/web/race-control-app/tmp
+/src/web/race-control-app/out-tsc
+# Only exists if Bazel was run
+/src/web/race-control-app/bazel-out
+
+# dependencies
+/src/web/race-control-app/node_modules
+
+# profiling files
+/src/web/race-control-appchrome-profiler-events.json
+/src/web/race-control-appspeed-measure-plugin.json
+
+# IDEs and editors
+/src/web/race-control-app/.idea
+/src/web/race-control-app.project
+/src/web/race-control-app.classpath
+/src/web/race-control-app.c9/
+/src/web/race-control-app*.launch
+/src/web/race-control-app.settings/
+/src/web/race-control-app*.sublime-workspace
+
+# IDE - VSCode
+/src/web/race-control-app.vscode/*
+/src/web/race-control-app!.vscode/settings.json
+/src/web/race-control-app!.vscode/tasks.json
+/src/web/race-control-app!.vscode/launch.json
+/src/web/race-control-app!.vscode/extensions.json
+/src/web/race-control-app.history/*
+
+# misc
+/src/web/race-control-app/.sass-cache
+/src/web/race-control-app/connect.lock
+/src/web/race-control-app/coverage
+/src/web/race-control-app/libpeerconnection.log
+/src/web/race-control-appnpm-debug.log
+/src/web/race-control-appyarn-error.log
+/src/web/race-control-apptestem.log
+/src/web/race-control-app/typings
+
+# System Files
+/src/web/race-control-app.DS_Store
+/src/web/race-control-appThumbs.db
