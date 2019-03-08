@@ -20,16 +20,35 @@ const web: SocketIO.Namespace =
   io.of("web")
   .on("connection", (socket: any) => {
     console.log("a user connected");
-
-    socket.on("hello", (data) => {
-      console.log("Hi there");
-    });
 });
 
 http.listen(3000, function(): void {
   console.log("listening on *:3000");
 });
 
+let i = 0;
+let up = true;
 setInterval(() => {
-  io.of("web").emit("message", { message: Math.trunc(Math.random() * 100) });
+  io.of("web").emit("telemetry_message", { 
+    values: { 
+      Throttle: i/100,
+      Brake: (100-i)/100,
+      SteeringWheelAngle: i
+    }
+  });
+  if(up) {
+    if(i === 100) {
+      up = false;
+      i -= 10;
+    } else {
+      i += 10;
+    }
+  }else {
+    if(i === 0) {
+      up = true;
+      i += 10;
+    } else {
+      i -= 10;
+    }
+  }
 }, 100);

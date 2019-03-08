@@ -12,9 +12,15 @@ export class SocketService {
     this.socket = io("http://localhost:3000/web");
   }
 
-  public onMessage(): Observable<any> {
+  public onTelemetryMessage(): Observable<any> {
     return new Observable<any>((observer) => {
-      this.socket.on("message", (data: any) => observer.next(data));
+      this.socket.on("telemetry_message", (data: any) => observer.next(data));
+    });
+  }
+
+  public onSessionMessage(): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.on("session_message", (data: any) => observer.next(data));
     });
   }
 

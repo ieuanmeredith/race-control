@@ -9,8 +9,9 @@ import { SocketService } from "./socket.service";
 // https://medium.com/dailyjs/real-time-apps-with-typescript-integrating-web-sockets-node-angular-e2b57cbd1ec1
 export class AppComponent implements OnInit {
   public title = "race-control-app";
-  public socket: any;
-  public throttle_perc: number;
+  public throttlePerc: number;
+  public brakePerc: number;
+  public wheelAngle: number;
 
   constructor(private socketService: SocketService) { }
 
@@ -21,10 +22,17 @@ export class AppComponent implements OnInit {
   private initSocketConnection(): void {
     this.socketService.initSocket();
 
-    this.socket = this.socketService.onMessage()
+    this.socketService.onTelemetryMessage()
       .subscribe((data: any) => {
         console.log(data);
-        this.throttle_perc = data.message;
+        this.throttlePerc = Math.trunc(data.values.Throttle * 100);
+        this.brakePerc = Math.trunc(data.values.Brake * 100);
+        this.wheelAngle = data.values.SteeringWheelAngle;
+      });
+
+    this.socketService.onSessionMessage()
+      .subscribe((data: any) => {
+        console.log(data);
       });
 
     this.socketService.onEvent("connect")

@@ -15,7 +15,11 @@ const receiver: SocketIO.Namespace =
     console.log("a transmitter connected");
 
     socket.on("telemetry", (data) => {
-      io.of("web").emit("message", { message: Math.trunc(data.values.Throttle * 100) });
+      io.of("web").emit("telemetry_message", data);
+    });
+
+    socket.on("session", (data) => {
+      io.of("web").emit("session_message", data);
     });
 });
 
@@ -23,10 +27,6 @@ const web: SocketIO.Namespace =
   io.of("web")
   .on("connection", (socket: any) => {
     console.log("a user connected");
-
-    socket.on("hello", (data) => {
-      console.log("Hi there");
-    });
 });
 
 http.listen(3000, function(): void {
