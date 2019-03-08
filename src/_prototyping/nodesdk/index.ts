@@ -14,7 +14,7 @@ socket.on("connect", () => {
 });
 
 irsdk.init({
-  telemetryUpdateInterval: 0,
+  telemetryUpdateInterval: 64, // 15 ticks per second
   sessionInfoUpdateInterval: 2000
 });
 

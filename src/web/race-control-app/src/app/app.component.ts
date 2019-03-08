@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
 
     this.socketService.onTelemetryMessage()
       .subscribe((data: any) => {
-        console.log(data);
         this.throttlePerc = Math.trunc(data.values.Throttle * 100);
         this.brakePerc = Math.trunc(data.values.Brake * 100);
         this.wheelAngle = data.values.SteeringWheelAngle;

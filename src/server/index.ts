@@ -15,7 +15,11 @@ const receiver: SocketIO.Namespace =
     console.log("a transmitter connected");
 
     socket.on("telemetry", (data) => {
-      io.of("web").emit("telemetry_message", data);
+      const dto: any = { "values": { "Throttle": Number, "Brake": Number, "SteeringWheelAngle": Number } };
+      dto.values.Throttle = data.values.Throttle;
+      dto.values.Brake = data.values.Brake;
+      dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 )* -1;
+      io.of("web").emit("telemetry_message", dto);
     });
 
     socket.on("session", (data) => {
