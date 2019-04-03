@@ -1,4 +1,5 @@
 import * as express from "express";
+import { ITelemetry } from "./classes/telemetry";
 const app: any = express();
 app.set("port", process.env.PORT || 3000);
 const http: any = require("http").Server(app);
@@ -14,10 +15,20 @@ const receiver: SocketIO.Namespace =
   .on("connection", (socket: any) => {
     console.log("a transmitter connected");
 
-    socket.on("telemetry", (data) => {
-      const dto: any = { "values": { "Throttle": Number, "Brake": Number, "SteeringWheelAngle": Number } };
+    socket.on("telemetry", (data: ITelemetry) => {
+      // use custom DTO instead of 'data'
+      // to minimize payload size
+      const dto: any =
+      { "values":
+        { 
+          "Throttle": Number,
+          "Brake": Number,
+          "SteeringWheelAngle": Number 
+        } 
+      };
       dto.values.Throttle = data.values.Throttle;
       dto.values.Brake = data.values.Brake;
+      // convert input to useful value for animating rotation
       dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 )* -1;
       io.of("web").emit("telemetry_message", dto);
     });
