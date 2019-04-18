@@ -1,5 +1,6 @@
 import * as express from "express";
 import { ITelemetry } from "./classes/telemetry";
+import { Dto } from "./classes/dto";
 const app: any = express();
 app.set("port", process.env.PORT || 3000);
 const http: any = require("http").Server(app);
@@ -18,14 +19,7 @@ const receiver: SocketIO.Namespace =
     socket.on("telemetry", (data: ITelemetry) => {
       // use custom DTO instead of 'data'
       // to minimize payload size
-      const dto: any =
-      { "values":
-        { 
-          "Throttle": Number,
-          "Brake": Number,
-          "SteeringWheelAngle": Number 
-        } 
-      };
+      const dto: Dto = new Dto();
       dto.values.Throttle = data.values.Throttle;
       dto.values.Brake = data.values.Brake;
       // convert input to useful value for animating rotation

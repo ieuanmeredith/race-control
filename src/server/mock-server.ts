@@ -1,5 +1,6 @@
 import * as express from "express";
 import { setInterval } from "timers";
+import { Dto } from "./classes/dto";
 const app: any = express();
 app.set("port", process.env.PORT || 3000);
 const http: any = require("http").Server(app);
@@ -29,13 +30,11 @@ http.listen(3000, function(): void {
 let i = 0;
 let up = true;
 setInterval(() => {
-  io.of("web").emit("telemetry_message", { 
-    values: { 
-      Throttle: i/100,
-      Brake: (100-i)/100,
-      SteeringWheelAngle: i
-    }
-  });
+  const dto = new Dto();
+  dto.values.Throttle = i/100;
+  dto.values.Brake = (100-i)/100;
+  dto.values.SteeringWheelAngle = i;
+  io.of("web").emit("telemetry_message", dto);
   if(up) {
     if(i === 100) {
       up = false;
