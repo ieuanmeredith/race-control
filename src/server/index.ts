@@ -20,8 +20,8 @@ const receiver: SocketIO.Namespace =
       // use custom DTO instead of 'data'
       // to minimize payload size
       const dto: Dto = new Dto();
-      dto.values.Throttle = data.values.Throttle;
-      dto.values.Brake = data.values.Brake;
+      dto.values.Throttle = data.values.ThrottleRaw;
+      dto.values.Brake = data.values.BrakeRaw;
       // convert input to useful value for animating rotation
       dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 )* -1;
       io.of("web").emit("telemetry_message", dto);

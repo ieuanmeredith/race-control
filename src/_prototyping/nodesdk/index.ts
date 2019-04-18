@@ -28,7 +28,7 @@ iracing.on("Connected", function (): void {
 
 iracing.on("Disconnected", function (): void {
   console.log("iRacing shut down, exiting.\n");
-  process.exit();
+  // process.exit();
 });
 
 iracing.on("TelemetryDescription", function (data: any): void {

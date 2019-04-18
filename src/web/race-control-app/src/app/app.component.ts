@@ -27,16 +27,16 @@ export class AppComponent implements OnInit {
   }
 
   private createThrottleTimeline() {
-    const chart = new SmoothieChart();
+    const chart = new SmoothieChart({maxValue: 100, minValue: 0});
     chart.addTimeSeries(this.throttleTimeSeries,
-      { strokeStyle: "rgba(0, 0, 255, 1)", fillStyle: "rgba(0, 0, 255, 0.2)", lineWidth: 2 });
-    chart.streamTo(this.throttleEl.nativeElement, 100);
+      { strokeStyle: "rgba(0, 0, 255, 1)", fillStyle: "rgba(0, 0, 255, 0.2)", lineWidth: 3 });
+    chart.streamTo(this.throttleEl.nativeElement, 0);
   }
   private createBrakeTimeline() {
-    const chart = new SmoothieChart();
+    const chart = new SmoothieChart({maxValue: 100, minValue: 0});
     chart.addTimeSeries(this.brakeTimeSeries,
-      { strokeStyle: "rgba(255, 0, 0, 1)", fillStyle: "rgba(255, 0, 0, 0.2)", lineWidth: 2 });
-    chart.streamTo(this.brakeEl.nativeElement, 100);
+      { strokeStyle: "rgba(255, 0, 0, 1)", fillStyle: "rgba(255, 0, 0, 0.2)", lineWidth: 3 });
+    chart.streamTo(this.brakeEl.nativeElement, 0);
   }
 
   private initSocketConnection(): void {
