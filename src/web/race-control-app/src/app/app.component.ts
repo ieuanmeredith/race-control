@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   private createThrottleTimeline() {
     const chart = new SmoothieChart();
     chart.addTimeSeries(this.throttleTimeSeries,
-      { strokeStyle: "rgba(0, 255, 0, 1)", fillStyle: "rgba(0, 255, 0, 0.2)", lineWidth: 2 });
+      { strokeStyle: "rgba(0, 0, 255, 1)", fillStyle: "rgba(0, 0, 255, 0.2)", lineWidth: 2 });
     chart.streamTo(this.throttleEl.nativeElement, 100);
   }
   private createBrakeTimeline() {
