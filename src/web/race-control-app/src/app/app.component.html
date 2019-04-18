@@ -13,4 +13,12 @@
     [ngStyle]="{'transform': 'rotate(' + wheelAngle + 'deg)'}"/>
 </div>
 
+<div>
+  <canvas #throttlecanvas id="chart" width="400" height="100"></canvas>
+</div>
+
+<div>
+    <canvas #brakecanvas id="chart" width="400" height="100"></canvas>
+</div>
+
 <router-outlet></router-outlet>

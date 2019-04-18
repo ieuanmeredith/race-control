@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ElementRef, Renderer2 } from "@angular/core";
+import { SmoothieChart, TimeSeries } from "smoothie";
 import { SocketService } from "./socket.service";
 @Component({
   selector: "app-root",
@@ -12,11 +14,29 @@ export class AppComponent implements OnInit {
   public throttlePerc: number;
   public brakePerc: number;
   public wheelAngle: number;
-
+  public throttleTimeSeries = new TimeSeries();
+  public brakeTimeSeries = new TimeSeries();
+  @ViewChild("throttlecanvas") private throttleEl: ElementRef;
+  @ViewChild("brakecanvas") private brakeEl: ElementRef;
   constructor(private socketService: SocketService) { }
 
   public ngOnInit(): void {
     this.initSocketConnection();
+    this.createThrottleTimeline();
+    this.createBrakeTimeline();
+  }
+
+  private createThrottleTimeline() {
+    const chart = new SmoothieChart();
+    chart.addTimeSeries(this.throttleTimeSeries,
+      { strokeStyle: "rgba(0, 255, 0, 1)", fillStyle: "rgba(0, 255, 0, 0.2)", lineWidth: 2 });
+    chart.streamTo(this.throttleEl.nativeElement, 100);
+  }
+  private createBrakeTimeline() {
+    const chart = new SmoothieChart();
+    chart.addTimeSeries(this.brakeTimeSeries,
+      { strokeStyle: "rgba(255, 0, 0, 1)", fillStyle: "rgba(255, 0, 0, 0.2)", lineWidth: 2 });
+    chart.streamTo(this.brakeEl.nativeElement, 100);
   }
 
   private initSocketConnection(): void {
@@ -27,6 +47,9 @@ export class AppComponent implements OnInit {
         this.throttlePerc = Math.trunc(data.values.Throttle * 100);
         this.brakePerc = Math.trunc(data.values.Brake * 100);
         this.wheelAngle = data.values.SteeringWheelAngle;
+
+        this.throttleTimeSeries.append(new Date().getTime(), this.throttlePerc);
+        this.brakeTimeSeries.append(new Date().getTime(), this.brakePerc);
       });
 
     this.socketService.onSessionMessage()
