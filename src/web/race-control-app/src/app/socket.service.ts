@@ -18,6 +18,12 @@ export class SocketService {
     });
   }
 
+  public onTimingMessage(): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.on("timing_message", (data: any) => observer.next(data));
+    });
+  }
+
   public onSessionMessage(): Observable<any> {
     return new Observable<any>((observer) => {
       this.socket.on("session_message", (data: any) => observer.next(data));

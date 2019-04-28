@@ -25,6 +25,21 @@ const receiver: SocketIO.Namespace =
       // convert input to useful value for animating rotation
       dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 )* -1;
       io.of("web").emit("telemetry_message", dto);
+
+      // Timing
+      const timingDto = {
+        values: {}
+      };
+      timingDto.values["SessionTimeRemain"] = data.values.SessionTimeRemain;
+      timingDto.values["CarIdxClassPosition"] = data.values.CarIdxClassPosition;
+      timingDto.values["CarIdxEstTime"] = data.values.CarIdxEstTime;
+      timingDto.values["CarIdxF2Time"] = data.values.CarIdxF2Time;
+      timingDto.values["CarIdxLap"] = data.values.CarIdxLap;
+      timingDto.values["CarIdxLapCompleted"] = data.values.CarIdxLapCompleted;
+      timingDto.values["CarIdxLapDistPct"] = data.values.CarIdxLapDistPct;
+      timingDto.values["CarIdxOnPitRoad"] = data.values.CarIdxOnPitRoad;
+      timingDto.values["CarIdxPosition"] = data.values.CarIdxPosition;
+      io.of("web").emit("timing_message", timingDto);
     });
 
     socket.on("session", (data) => {

@@ -3,7 +3,7 @@ import { ElementRef, Renderer2 } from "@angular/core";
 import { SmoothieChart, TimeSeries } from "smoothie";
 import { SocketService } from "./socket.service";
 @Component({
-  selector: "app-root",
+  selector: "telemetry",
   styleUrls: ["./app.component.scss"],
   templateUrl: "./app.component.html",
 })
