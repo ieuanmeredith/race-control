@@ -40,5 +40,6 @@ iracing.on("Telemetry", function (data: any): void {
 });
 
 iracing.on("SessionInfo", function (data: any): void {
+  console.log("sending session");
   socket.emit("session", data);
 });

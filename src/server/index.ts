@@ -24,6 +24,15 @@ const receiver: SocketIO.Namespace =
       dto.values.Brake = data.values.BrakeRaw;
       // convert input to useful value for animating rotation
       dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 )* -1;
+      dto.values.CarIdxClassPosition = data.values.CarIdxClassPosition;
+      dto.values.CarIdxEstTime = data.values.CarIdxEstTime;
+      dto.values.CarIdxF2Time = data.values.CarIdxF2Time;
+      dto.values.CarIdxLap = data.values.CarIdxLap;
+      dto.values.CarIdxLapCompleted = data.values.CarIdxLapCompleted;
+      dto.values.CarIdxLapDistPct = data.values.CarIdxLapDistPct;
+      dto.values.CarIdxOnPitRoad = data.values.CarIdxOnPitRoad;
+      dto.values.CarIdxPosition = data.values.CarIdxPosition;
+      dto.values.CarIdxTrackSurface = data.values.CarIdxTrackSurface;
       io.of("web").emit("telemetry_message", dto);
 
       // timing
