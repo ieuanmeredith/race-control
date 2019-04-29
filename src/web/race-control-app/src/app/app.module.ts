@@ -4,7 +4,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { RouterComponent } from "./router.component";
-import { TimingComponent } from "./timing.component";
+import { TimingComponent } from "./timing/timing.component";
 
 @NgModule({
   bootstrap: [RouterComponent],

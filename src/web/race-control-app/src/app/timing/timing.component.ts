@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ElementRef, Renderer2 } from "@angular/core";
-import { SocketService } from "./socket.service";
+import { SocketService } from "../socket.service";
 
 @Component({
   selector: "timing",
