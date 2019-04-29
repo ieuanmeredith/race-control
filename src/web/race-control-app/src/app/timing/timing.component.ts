@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ElementRef, Renderer2 } from "@angular/core";
-import { SocketService } from "./socket.service";
+import { SocketService } from "../socket.service";
 
 @Component({
   selector: "timing",
@@ -17,6 +17,10 @@ export class TimingComponent implements OnInit {
   private initSocketConnection(): void {
     this.socketService.initSocket();
 
+    this.socketService.onTelemetryMessage()
+    .subscribe((data: any) => {
+      console.log(data);
+    });
     this.socketService.onSessionMessage()
     .subscribe((data: any) => {
       console.log(data);
