@@ -26,19 +26,19 @@ const receiver: SocketIO.Namespace =
       dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 )* -1;
       io.of("web").emit("telemetry_message", dto);
 
-      // Timing
-      const timingDto = {
+      // timing
+      const timingDto: any = {
         values: {}
       };
-      timingDto.values["SessionTimeRemain"] = data.values.SessionTimeRemain;
-      timingDto.values["CarIdxClassPosition"] = data.values.CarIdxClassPosition;
-      timingDto.values["CarIdxEstTime"] = data.values.CarIdxEstTime;
-      timingDto.values["CarIdxF2Time"] = data.values.CarIdxF2Time;
-      timingDto.values["CarIdxLap"] = data.values.CarIdxLap;
-      timingDto.values["CarIdxLapCompleted"] = data.values.CarIdxLapCompleted;
-      timingDto.values["CarIdxLapDistPct"] = data.values.CarIdxLapDistPct;
-      timingDto.values["CarIdxOnPitRoad"] = data.values.CarIdxOnPitRoad;
-      timingDto.values["CarIdxPosition"] = data.values.CarIdxPosition;
+      timingDto.values.SessionTimeRemain = data.values.SessionTimeRemain;
+      timingDto.values.CarIdxClassPosition = data.values.CarIdxClassPosition;
+      timingDto.values.CarIdxEstTime = data.values.CarIdxEstTime;
+      timingDto.values.CarIdxF2Time = data.values.CarIdxF2Time;
+      timingDto.values.CarIdxLap = data.values.CarIdxLap;
+      timingDto.values.CarIdxLapCompleted = data.values.CarIdxLapCompleted;
+      timingDto.values.CarIdxLapDistPct = data.values.CarIdxLapDistPct;
+      timingDto.values.CarIdxOnPitRoad = data.values.CarIdxOnPitRoad;
+      timingDto.values.CarIdxPosition = data.values.CarIdxPosition;
       io.of("web").emit("timing_message", timingDto);
     });
 
