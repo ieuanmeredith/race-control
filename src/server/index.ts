@@ -11,6 +11,8 @@ app.get("/", function(req: any, res: any): void {
   res.sendFile(__dirname, "index.html");
 });
 
+let sessionData = {};
+
 const receiver: SocketIO.Namespace =
   io.of("receiver")
   .on("connection", (socket: any) => {
@@ -52,6 +54,7 @@ const receiver: SocketIO.Namespace =
     });
 
     socket.on("session", (data) => {
+      sessionData = data;
       io.of("web").emit("session_message", data);
     });
 });
@@ -60,6 +63,8 @@ const web: SocketIO.Namespace =
   io.of("web")
   .on("connection", (socket: any) => {
     console.log("a user connected");
+    // send stored sessionData
+    io.of("web").emit("session_message", sessionData);
 });
 
 http.listen(3000, function(): void {

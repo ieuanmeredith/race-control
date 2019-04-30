@@ -10,17 +10,6 @@ import { SocketService } from "../socket.service";
 
 export class TimingComponent implements OnInit {
   public drivers: any[] = [];
-  // public carIdxLap: number[] = [];
-  // public carIdxLapCompleted: number[] = [];
-  // public carIdxLapDistPct: number[] = [];
-  // // use "NotInWorld values as flag for driver in session or not"
-  // public carIdxTrackSurface: string[] = [];
-  // public carIdxOnPitRoad: boolean[] = [];
-  // public carIdxPosition: number[] = [];
-  // public carIdxClassPosition: number[] = [];
-  // public carIdxF2Time: number[] = [];
-  // // est time to DistPct of driverX from our driver
-  // public carIdxEstTime: number[] = [];
 
   public timingObjects: any[] = [];
 
@@ -39,13 +28,13 @@ export class TimingComponent implements OnInit {
         this.timingObjects = [];
         for (let i = 0; i < this.drivers.length; i++) {
           if (this.drivers[i].CarIsPaceCar === 0) {
-
             const position = data.values.CarIdxPosition[i];
             const name = this.drivers[i].TeamName;
 
             this.timingObjects.push({
               "Name": name,
-              "Position": position
+              "Position": position,
+              "ClassColour": this.drivers[i].CarClassColor.toString(16)
             });
           }
         }
