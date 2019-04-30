@@ -28,12 +28,11 @@ export class TimingComponent implements OnInit {
         this.timingObjects = [];
         for (let i = 0; i < this.drivers.length; i++) {
           if (this.drivers[i].CarIsPaceCar === 0) {
-            const position = data.values.CarIdxPosition[i];
-            const name = this.drivers[i].TeamName;
-
             this.timingObjects.push({
-              "Name": name,
-              "Position": position,
+              "Name": this.drivers[i].TeamName,
+              "Position": data.values.CarIdxPosition[i],
+              "ClassPosition": data.values.CarIdxClassPosition[i],
+              "OnPitRoad": data.values.CarIdxOnPitRoad[i],
               "ClassColour": this.drivers[i].CarClassColor.toString(16)
             });
           }
