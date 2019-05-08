@@ -1,5 +1,7 @@
 <ul>
     <li *ngFor="let timing of timingObjects; trackBy: index;">
-        {{ timing.Name }} - {{ timing.Position }}
+        <div [ngStyle]="{'background': timing.ClassColour}">
+            {{ timing.Name }} - {{ timing.Position }} - {{timing.ClassPosition}} - {{timing.EstTime}}
+        </div>
     </li>
 </ul>

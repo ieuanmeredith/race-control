@@ -5,9 +5,15 @@ import * as io from "socket.io-client";
 
 const socket: SocketIOClient.Socket = io("http://localhost:3000/receiver");
 
+let sessionCache: any;
+
 socket.on("connect", () => {
   if(socket.connected) {
     console.log("Connected to the Race Control server");
+    if(this.sessionCache) {
+      console.log("sending session");
+      socket.emit("session", this.sessionCache);
+    }
   } else {
     console.log("Failed to connect to Race Control server");
   }
@@ -41,5 +47,6 @@ iracing.on("Telemetry", function (data: any): void {
 
 iracing.on("SessionInfo", function (data: any): void {
   console.log("sending session");
+  this.sessionCache  = data;
   socket.emit("session", data);
 });
