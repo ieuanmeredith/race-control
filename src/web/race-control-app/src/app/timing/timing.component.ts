@@ -17,6 +17,8 @@ export class TimingComponent implements OnInit {
   public carIdXCurrentLapStartTime: number[] = [];
   public carIdXLapTimes: number[][] = [];
 
+  public carIdxPittedLap: number[] = [];
+
   constructor(private socketService: SocketService) {}
 
   public ngOnInit(): void {
@@ -31,9 +33,12 @@ export class TimingComponent implements OnInit {
       if (this.drivers.length > 0) {
         this.timingObjects = [];
         for (let i = 0; i < this.drivers.length; i++) {
-          if (this.drivers[i].CarIsPaceCar === 0 && data.values.CarIdxPosition[i] > 0) {
+          if (this.drivers[i].CarIsPaceCar === 0
+            && this.drivers[i].IsSpectator === 0
+            && data.values.CarIdxPosition[i] > 0) {
             this.populateTimingObject(data, i);
             this.processLapDifference(data, i);
+            this.checkPittedLap(data, i);
           }
         }
         this.timingObjects = this.timingObjects.sort((a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0));
@@ -79,6 +84,14 @@ export class TimingComponent implements OnInit {
           this.carIdXCurrentLapStartTime[i] = timeRemaining;
           // update current lap
           this.carIdXCurrentLap[i] = data.values.CarIdxLap[i];
+        }
+      }
+
+      private checkPittedLap(data: any, i: number) {
+        if (data.values.CarIdxOnPitRoad[i]) {
+          if (this.carIdxPittedLap[i] !== data.values.CarIdxLap[i]) {
+            this.carIdxPittedLap[i] = data.values.CarIdxLap[i];
+          }
         }
       }
     //#endregion
