@@ -1,16 +1,15 @@
-const irsdk: any = require("node-irsdk");
-const fs: any = require("fs");
+import irsdk from "node-irsdk";
 
 import * as io from "socket.io-client";
 
 const socket: SocketIOClient.Socket = io("http://localhost:3000/receiver");
 
-let sessionCache: any;
+const sessionCache: any = null;
 
 socket.on("connect", () => {
-  if(socket.connected) {
+  if (socket.connected) {
     console.log("Connected to the Race Control server");
-    if(this.sessionCache) {
+    if (this.sessionCache) {
       console.log("sending session");
       socket.emit("session", this.sessionCache);
     }
@@ -20,32 +19,32 @@ socket.on("connect", () => {
 });
 
 irsdk.init({
+  sessionInfoUpdateInterval: 2000,
   telemetryUpdateInterval: 64, // 15 ticks per second
-  sessionInfoUpdateInterval: 2000
 });
 
 const iracing: any = irsdk.getInstance();
 
 console.log("waiting for iRacing...");
 
-iracing.on("Connected", function (): void {
+iracing.on("Connected", () => {
   console.log("connected to iRacing..");
 });
 
-iracing.on("Disconnected", function (): void {
+iracing.on("Disconnected", () => {
   console.log("iRacing shut down, exiting.\n");
   // process.exit();
 });
 
-iracing.on("TelemetryDescription", function (data: any): void {
+iracing.on("TelemetryDescription", (data: any) => {
   console.log("got TelemetryDescription");
 });
 
-iracing.on("Telemetry", function (data: any): void {
+iracing.on("Telemetry", (data: any) => {
   socket.emit("telemetry", data);
 });
 
-iracing.on("SessionInfo", function (data: any): void {
+iracing.on("SessionInfo", (data: any) => {
   console.log("sending session");
   this.sessionCache  = data;
   socket.emit("session", data);

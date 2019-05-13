@@ -58,3 +58,10 @@ src/_prototyping/nodesdk/package-lock.json
 # System Files
 /src/web/race-control-app.DS_Store
 /src/web/race-control-appThumbs.db
+/src/_prototyping/blazor/timing/.vs
+/src/_prototyping/blazor/timing/timing.Shared/obj
+/src/_prototyping/blazor/timing/timing.Shared/bin
+/src/_prototyping/blazor/timing/timing.Server/bin
+/src/_prototyping/blazor/timing/timing.Server/obj
+/src/_prototyping/blazor/timing/timing.Client/obj
+/src/_prototyping/blazor/timing/timing.Client/bin
