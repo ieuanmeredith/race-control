@@ -25,7 +25,7 @@ const receiver: SocketIO.Namespace =
       dto.values.Throttle = data.values.Throttle;
       dto.values.Brake = data.values.Brake;
       // convert input to useful value for animating rotation
-      dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 )* -1;
+      dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 ) * -1;
       dto.values.CarIdxClassPosition = data.values.CarIdxClassPosition;
       dto.values.CarIdxEstTime = data.values.CarIdxEstTime;
       dto.values.CarIdxF2Time = data.values.CarIdxF2Time;
