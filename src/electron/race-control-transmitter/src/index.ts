@@ -1,22 +1,67 @@
 import { app, BrowserWindow } from "electron";
-import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 import { enableLiveReload } from "electron-compile";
+import path = require("path");
+import ChildProcess = require("child_process");
+
+if (require("electron-squirrel-startup")) {
+  const appFolder = path.resolve(process.execPath, "..");
+  const rootAtomFolder = path.resolve(appFolder, "..");
+  const updateDotExe = path.resolve(path.join(rootAtomFolder, "Update.exe"));
+  const exeName = path.basename(process.execPath);
+
+  const spawn = function(command: any, args: any) {
+    let spawnedProcess;
+    try {
+      spawnedProcess = ChildProcess.spawn(command, args, {detached: true});
+    } catch (error) {}
+
+    return spawnedProcess;
+  };
+
+  const spawnUpdate = function(args: any) {
+    return spawn(updateDotExe, args);
+  };
+
+  const squirrelEvent = process.argv[1];
+  switch (squirrelEvent) {
+    case "--squirrel-install":
+    case "--squirrel-updated":
+      // Install desktop and start menu shortcuts
+      spawnUpdate(["--createShortcut", exeName]);
+      setTimeout(app.quit, 1000);
+
+    case "--squirrel-uninstall":
+      // Undo anything you did in the --squirrel-install and
+      // --squirrel-updated handlers
+      // Remove desktop and start menu shortcuts
+      spawnUpdate(["--removeShortcut", exeName]);
+      setTimeout(app.quit, 1000);
+
+    case "--squirrel-obsolete":
+      // This is called on the outgoing version of your app before
+      // we update to the new version - it's the opposite of
+      // --squirrel-updated
+
+      app.quit();
+    default:
+      app.quit();
+  }
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow: Electron.BrowserWindow | null = null;
+let mainWindow: Electron.BrowserWindow | null;
 
 const isDevMode = process.execPath.match(/[\\/]electron/);
 
-if (isDevMode) {
-  enableLiveReload({strategy: "react-hmr"});
-}
+if (isDevMode) { enableLiveReload(); }
 
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 400,
+    width: 330,
+    height: 300,
+    title: "Race Control - Transmitter"
   });
 
   // and load the index.html of the app.
@@ -24,7 +69,6 @@ const createWindow = async () => {
 
   // Open the DevTools.
   if (isDevMode) {
-    await installExtension(REACT_DEVELOPER_TOOLS);
     mainWindow.webContents.openDevTools();
   }
 

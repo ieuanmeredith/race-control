@@ -1,15 +1,15 @@
 {
   "name": "race-control-transmitter",
-  "productName": "race-control-transmitter",
+  "productName": "Race Control - Transmitter",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Race Control Transmitter App",
   "main": "src/index.ts",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "tslint --project tsconfig.json --type-check --force"
+    "lint": "tslint src"
   },
   "keywords": [],
   "author": "Ieuan",
@@ -50,13 +50,16 @@
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/react": "^0.14.57",
     "@types/react-dom": "^0.14.23",
-    "electron": "^4.0.7",
+    "electron": "^4.1.4",
     "electron-compile": "^6.4.4",
     "electron-devtools-installer": "^2.2.4",
     "electron-squirrel-startup": "^1.0.0",
+    "node-irsdk": "^2.1.4",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-hot-loader": "^3.1.3",
+    "reflect-metadata": "^0.1.13",
+    "socket.io-client": "^2.2.0",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
@@ -66,6 +69,8 @@
     "electron-forge": "^5.2.4",
     "electron-prebuilt-compile": "4.0.0",
     "tslint": "^5.13.1",
-    "typescript": "^2.2.2"
+    "typescript": "^2.2.2",
+    "@types/node": "^11.10.4",
+    "@types/socket.io-client": "^1.4.32"
   }
 }
