@@ -2,7 +2,7 @@ import * as express from "express";
 import { ITelemetry } from "./classes/telemetry";
 import { Dto } from "./classes/dto";
 const app: any = express();
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 80);
 const http: any = require("http").Server(app);
 
 let io: SocketIO.Server = require("socket.io")(http);
@@ -67,6 +67,6 @@ const web: SocketIO.Namespace =
     io.of("web").emit("session_message", sessionData);
 });
 
-http.listen(3000, function(): void {
-  console.log("listening on *:3000");
+http.listen(80, function(): void {
+  console.log("listening on *:80");
 });
