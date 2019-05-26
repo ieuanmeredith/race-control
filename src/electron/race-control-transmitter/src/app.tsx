@@ -50,7 +50,7 @@ export class App extends React.Component<undefined, any> {
       return;
     }
 
-    this.socket = io(this.state.url, {reconnection: false} as SocketIOClient.ConnectOpts);
+    this.socket = io(this.state.url, {reconnection: false, transports: ["websocket"]} as SocketIOClient.ConnectOpts);
 
     this.socket.on("connect_failed", () => {
       alert("Failed to connect to Race Control server");
@@ -97,11 +97,12 @@ export class App extends React.Component<undefined, any> {
         });
 
         iracing.on("Disconnected", () => {
-          console.log("iRacing shut down, exiting.\n");
+          this.setState({
+            ["status"]: "Waiting for iRacing..."
+          });
         });
 
         iracing.on("TelemetryDescription", (data: any) => {
-          console.log("got TelemetryDescription");
         });
 
         iracing.on("Telemetry", (data: any) => {
@@ -109,7 +110,6 @@ export class App extends React.Component<undefined, any> {
         });
 
         iracing.on("SessionInfo", (data: any) => {
-          console.log("sending session");
           this.sessionCache = data;
           this.socket.emit("session", data);
         });

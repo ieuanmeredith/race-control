@@ -9,7 +9,7 @@ export class SocketService {
   private socket: SocketIOClient.Socket;
 
   public initSocket() {
-    this.socket = io("http://localhost:3000/web");
+    this.socket = io("http://ec2-13-125-185-23.ap-northeast-2.compute.amazonaws.com/web");
   }
 
   public onTelemetryMessage(): Observable<any> {

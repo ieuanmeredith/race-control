@@ -1,5 +1,5 @@
 export class Dto {
-  "values":
+  public "values":
     {
       "Throttle": number,
       "Brake": number,
@@ -13,6 +13,8 @@ export class Dto {
       "CarIdxClassPosition": number[],
       "CarIdxF2Time": number[],
       "CarIdxEstTime": number[],
+      "SessionTime": number,
+      "SessionTimeRemain": number,
     };
 
   constructor() {
@@ -29,6 +31,8 @@ export class Dto {
       "CarIdxClassPosition": [],
       "CarIdxF2Time": [],
       "CarIdxEstTime": [],
+      "SessionTime": 0,
+      "SessionTimeRemain": 0,
     };
   }
 }

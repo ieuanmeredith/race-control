@@ -35,6 +35,8 @@ const receiver: SocketIO.Namespace =
       dto.values.CarIdxOnPitRoad = data.values.CarIdxOnPitRoad;
       dto.values.CarIdxPosition = data.values.CarIdxPosition;
       dto.values.CarIdxTrackSurface = data.values.CarIdxTrackSurface;
+      dto.values.SessionTime = data.values.SessionTime;
+      dto.values.SessionTimeRemain = data.values.SessionTimeRemain;
       io.of("web").emit("telemetry_message", dto);
 
       // timing

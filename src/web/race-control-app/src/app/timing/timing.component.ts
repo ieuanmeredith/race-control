@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { ElementRef, Renderer2 } from "@angular/core";
 import { SocketService } from "../socket.service";
 
 @Component({
@@ -13,14 +12,17 @@ export class TimingComponent implements OnInit {
   public timingObjects: any[] = [];
 
   // lap time array definitions
-  public carIdXCurrentLap: number[] = [];
-  public carIdXCurrentLapStartTime: number[] = [];
-  public carIdXLapTimes: number[][] = [];
+  public carIdxCurrentLap: number[] = [];
+  public carIdxCurrentLapStartTime: number[] = [];
+  public carIdxLapTimes: string[][] = [];
 
   public carIdxPittedLap: number[] = [];
   public carIdxPittedStart: number[] = [];
   public carIdxPitTime: number[] = [];
   public carIdxPitLapRecord: number[][] = [];
+  public carIdxPitLastStopTime: number[] = [];
+
+  public carIdxStintRecord: number[][] = [];
 
   constructor(private socketService: SocketService) {}
 
@@ -40,9 +42,9 @@ export class TimingComponent implements OnInit {
           if (this.drivers[i].CarIsPaceCar === 0
             && this.drivers[i].IsSpectator === 0
             && data.values.CarIdxPosition[i] > 0) {
-            this.populateTimingObject(data, i);
             this.processLapChange(data, i);
             this.processPitlane(data, i);
+            this.populateTimingObject(data, i);
           }
         }
         this.timingObjects = this.timingObjects.sort((a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0));
@@ -66,6 +68,8 @@ export class TimingComponent implements OnInit {
       private populateTimingObject(data: any, i: number) {
         this.timingObjects.push({
           "Name": this.drivers[i].TeamName,
+          "DriverName": this.drivers[i].UserName,
+          "CarNum": this.drivers[i].CarNumber,
           "Position": data.values.CarIdxPosition[i],
           "ClassPosition": data.values.CarIdxClassPosition[i],
           "OnPitRoad": data.values.CarIdxOnPitRoad[i],
@@ -73,26 +77,42 @@ export class TimingComponent implements OnInit {
           "IRating": this.drivers[i].IRating,
           "LicString": this.drivers[i].LicString,
           "LicColor": "#" + this.drivers[i].LicColor.toString(16),
-          "EstTime": data.values.CarIdxEstTime[i].toFixed(1)
+          "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
+          "PitTime": this.carIdxPitTime[i].toFixed(1),
+          "PitLastTime": this.carIdxPitLastStopTime[i] ? this.carIdxPitLastStopTime[i].toFixed(1) : 0,
+          "PittedLap": this.carIdxPittedLap[i],
+          "CarLap": data.values.CarIdxLap[i],
+          "StintLength": this.carIdxStintRecord[i][this.carIdxStintRecord[i].length - 1],
+          "LastLap": this.carIdxLapTimes[i][this.carIdxLapTimes[i].length - 1]
         });
       }
 
       private processLapChange(data: any, i: number) {
-        // ensuring base 0 figure is set
-        if (data.values.CarIdxLap[i] === 0) {
-          this.carIdXCurrentLap[i] = 0;
+        if (!this.carIdxLapTimes[i]) {
+          this.carIdxLapTimes[i] = [];
+        }
+        if (this.carIdxCurrentLap[i] === -1) {
+          return;
         }
         // if telemetry lap is different to lap in memory
         // new lap started, calculate and insert lap time to array
-        else if (this.carIdXCurrentLap[i] !== data.values.CarIdxLap[i]) {
+        if (this.carIdxCurrentLap[i] !== data.values.CarIdxLap[i]) {
           // calculate lap time
-          const timeRemaining = data.values.SessionTimeRemain;
-          const startTime = this.carIdXCurrentLapStartTime[i];
-          this.carIdXLapTimes[i][data.values.carIdXCurrentLap[i]] = startTime - timeRemaining;
+          const sessionTime = data.values.SessionTime;
+          const startTime = this.carIdxCurrentLapStartTime[i];
+          if (!startTime) {
+            this.carIdxCurrentLapStartTime[i] = sessionTime;
+            this.carIdxCurrentLap[i] = data.values.CarIdxLap[i];
+            return;
+          }
+          if (!this.carIdxLapTimes[i]) {
+            this.carIdxLapTimes[i] = [];
+          }
+          this.carIdxLapTimes[i].push((sessionTime - startTime).toFixed(2));
           // insert lap time to array for carIdX
-          this.carIdXCurrentLapStartTime[i] = timeRemaining;
+          this.carIdxCurrentLapStartTime[i] = sessionTime;
           // update current lap to new value
-          this.carIdXCurrentLap[i] = data.values.CarIdxLap[i];
+          this.carIdxCurrentLap[i] = data.values.CarIdxLap[i];
         }
       }
 
@@ -100,25 +120,36 @@ export class TimingComponent implements OnInit {
         if (!this.carIdxPitLapRecord[i]) {
           this.carIdxPitLapRecord[i] = [];
         }
+        if (!this.carIdxStintRecord[i]) {
+          this.carIdxStintRecord[i] = [];
+        }
+        if (!this.carIdxPitTime[i]) {
+          this.carIdxPitTime[i] = 0;
+        }
         // if car is on pit road and counter is 0
         // car has just entered the pits
-        if (data.value.CarIdxOnPitRoad[i] && this.carIdxPitTime[i] === 0) {
+        if (data.values.CarIdxOnPitRoad[i] && this.carIdxPitTime[i] === 0) {
           this.carIdxPittedStart[i] = data.values.SessionTime;
           this.carIdxPittedLap[i] = data.values.CarIdxLap[i];
-          this.carIdxPitLapRecord[i].push(data.value.CarIdxLap[i]);
+          this.carIdxPitLapRecord[i].push(data.values.CarIdxLap[i]);
           // set time in pits to non 0 value
           this.carIdxPitTime[i] = 0.01;
         }
         // if car is on pit road and counter is > 0
         // car is currently in the pits
-        else if (data.value.CarIdxOnPitRoad[i] && this.carIdxPitTime[i] > 0) {
+        else if (data.values.CarIdxOnPitRoad[i] && this.carIdxPitTime[i] > 0) {
+          const intermediate = (data.values.SessionTime) - (this.carIdxPittedStart[i]);
           this.carIdxPitTime[i] =
-            (data.values.SessionTime - this.carIdxPittedStart[i]);
+          intermediate > 0 ? intermediate : 0.1;
         }
         // if car is not on pit road
         // set pit time to 0
-        else if (!data.value.CarIdxOnPitRoad[i]) {
-          this.carIdxPitTime[i] = 0;
+        else if (!data.values.CarIdxOnPitRoad[i]) {
+          if (this.carIdxPitTime[i] > 0 ) {
+            this.carIdxStintRecord[i].push(data.values.CarIdxLap[i] - this.carIdxPitLapRecord[i][this.carIdxPitLapRecord[i].length - 1]);
+            this.carIdxPitLastStopTime[i] = this.carIdxPitTime[i];
+            this.carIdxPitTime[i] = 0;
+          }
         }
       }
     //#endregion
