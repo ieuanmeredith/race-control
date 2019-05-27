@@ -19,7 +19,7 @@ export class TimingComponent implements OnInit {
   private initSocketConnection(): void {
     this.socketService.initSocket();
 
-    this.socketService.onTelemetryMessage().subscribe((data: any) => {
+    this.socketService.onTimingMessage().subscribe((data: any) => {
       this.timingObjects = data;
     });
 

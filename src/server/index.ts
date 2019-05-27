@@ -13,7 +13,6 @@ app.get("/", function(req: any, res: any): void {
 
 //#region timing state variables
 let drivers: any[] = [];
-let timingObjects: any[] = [];
 
 // lap time array definitions
 let carIdxCurrentLap: number[] = [];
@@ -30,28 +29,6 @@ let carIdxStintRecord: number[][] = [];
 //#endregion
 
 //#region private methods
-const populateTimingObject = (data: any, i: number) => {
-  timingObjects.push({
-    "Name": drivers[i].TeamName,
-    "DriverName": drivers[i].UserName,
-    "CarNum": drivers[i].CarNumber,
-    "Position": data.values.CarIdxPosition[i],
-    "ClassPosition": data.values.CarIdxClassPosition[i],
-    "OnPitRoad": data.values.CarIdxOnPitRoad[i],
-    "ClassColour": "#" + drivers[i].CarClassColor.toString(16),
-    "IRating": drivers[i].IRating,
-    "LicString": drivers[i].LicString,
-    "LicColor": "#" + drivers[i].LicColor.toString(16),
-    "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
-    "PitTime": carIdxPitTime[i].toFixed(1),
-    "PitLastTime": carIdxPitLastStopTime[i] ? carIdxPitLastStopTime[i].toFixed(1) : 0,
-    "PittedLap": carIdxPittedLap[i],
-    "CarLap": data.values.CarIdxLap[i],
-    "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
-    "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
-  });
-};
-
 const processLapChange = (data: any, i: number) => {
   if (!carIdxLapTimes[i]) {
     carIdxLapTimes[i] = [];
@@ -75,14 +52,20 @@ const processLapChange = (data: any, i: number) => {
     }
     const lapTimeSecs = (sessionTime - startTime);
     const mins = lapTimeSecs / 60;
-    const seconds = lapTimeSecs - (60 * mins);
-    carIdxLapTimes[i].push(`${mins.toFixed(0)}:${seconds.toFixed(2)}`);
+    const seconds = lapTimeSecs - (60 * Math.floor(mins));
+    carIdxLapTimes[i].push(`${Math.floor(mins).toFixed(0)}:${Math.floor(seconds) >= 10 ? seconds.toFixed(2) : "0" + seconds.toFixed(2)}`);
     // insert lap time to array for carIdX
     carIdxCurrentLapStartTime[i] = sessionTime;
     // update current lap to new value
     carIdxCurrentLap[i] = data.values.CarIdxLap[i];
   }
 };
+
+function pad(num, size) {
+  let s = num + "";
+  while (s.length < size) { s = "0" + s; }
+  return s;
+}
 
 const processPitlane = (data: any, i: number) => {
   if (!carIdxPitLapRecord[i]) {
@@ -134,6 +117,7 @@ const receiver: SocketIO.Namespace =
     console.log("a transmitter connected");
 
     socket.on("telemetry", (msg: any) => {
+      let timingObjects = [];
       const data: ITelemetry = msg.data;
       // process and send telemetry feed
       // use custom DTO instead of 'data'
@@ -165,7 +149,25 @@ const receiver: SocketIO.Namespace =
             && data.values.CarIdxPosition[i] > 0) {
             processLapChange(data, i);
             processPitlane(data, i);
-            populateTimingObject(data, i);
+            timingObjects.push({
+              "Name": drivers[i].TeamName,
+              "DriverName": drivers[i].UserName,
+              "CarNum": drivers[i].CarNumber,
+              "Position": data.values.CarIdxPosition[i],
+              "ClassPosition": data.values.CarIdxClassPosition[i],
+              "OnPitRoad": data.values.CarIdxOnPitRoad[i],
+              "ClassColour": "#" + drivers[i].CarClassColor.toString(16),
+              "IRating": drivers[i].IRating,
+              "LicString": drivers[i].LicString,
+              "LicColor": "#" + drivers[i].LicColor.toString(16),
+              "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
+              "PitTime": carIdxPitTime[i].toFixed(1),
+              "PitLastTime": carIdxPitLastStopTime[i] ? carIdxPitLastStopTime[i].toFixed(1) : 0,
+              "PittedLap": carIdxPittedLap[i],
+              "CarLap": data.values.CarIdxLap[i],
+              "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
+              "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
+            });
           }
         }
         timingObjects = timingObjects.sort(
@@ -178,13 +180,13 @@ const receiver: SocketIO.Namespace =
 
     socket.on("session", (msg: any) => {
       const session: any = msg.data;
-      const driver_id: any = msg.id;
+      const driver_id: any = msg.driver_id;
 
       // if driver_id is active driver,
       // use their session data
       let activeDriver: boolean = false;
-      for (let i = 0; i < drivers.length; i++) {
-        if (driver_id === drivers[i].UserID) {
+      for (let i = 0; i < session.data.DriverInfo.Drivers.length; i++) {
+        if (Number(driver_id) === session.data.DriverInfo.Drivers[i].UserID) {
           activeDriver = true;
         }
       }

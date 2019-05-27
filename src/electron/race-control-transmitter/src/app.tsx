@@ -87,7 +87,9 @@ export class App extends React.Component<undefined, any> {
         });
 
         if (this.sessionCache) {
-          this.socket.emit("session", this.sessionCache);
+          const driverid = this.state.id;
+          const msg = { "driver_id": driverid, "data": this.sessionCache };
+          this.socket.emit("session", msg);
         }
 
         iracing.on("Connected", () => {
@@ -103,12 +105,16 @@ export class App extends React.Component<undefined, any> {
         });
 
         iracing.on("Telemetry", (data: any) => {
-          this.socket.emit("telemetry", { id: this.state.id, data: data });
+          const driverid = this.state.id;
+          const msg = { "driver_id": driverid, "data": data };
+          this.socket.emit("telemetry", msg);
         });
 
         iracing.on("SessionInfo", (data: any) => {
           this.sessionCache = data;
-          this.socket.emit("session", { id: this.state.id, data: data });
+          const driverid = this.state.id;
+          const msg = { "driver_id": driverid, "data": data };
+          this.socket.emit("session", msg);
         });
 
       } else {
