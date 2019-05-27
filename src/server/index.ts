@@ -178,7 +178,19 @@ const receiver: SocketIO.Namespace =
 
     socket.on("session", (msg: any) => {
       const session: any = msg.data;
-      drivers = session.data.DriverInfo.Drivers;
+      const driver_id: any = msg.id;
+
+      // if driver_id is active driver,
+      // use their session data
+      let activeDriver: boolean = false;
+      for (let i = 0; i < drivers.length; i++) {
+        if (driver_id === drivers[i].UserID) {
+          activeDriver = true;
+        }
+      }
+      if (activeDriver) {
+        drivers = session.data.DriverInfo.Drivers;
+      }
     });
 });
 
