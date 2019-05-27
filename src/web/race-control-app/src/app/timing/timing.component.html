@@ -40,19 +40,21 @@
     </li>
     <li style="border: 1px solid #000000;" *ngFor="let timing of timingObjects; trackBy: index;">
         <div [ngStyle]="{'background': timing.ClassColour}" style="color: #333333;">
+
             <span class="ele" style="min-width: 50px !important;">
-                <b style="position: relative; top: 8px; left: 5px;">{{ timing.CarNum }}</b>
+                <b style="position: relative; top: 8px; left: 5px;">{{timing.CarNum}}</b>
             </span>
-            <span style="width: 300px;" class="ele">
-                
-                <small>{{ timing.Name }}</small>
+
+            <span style="width: 300px;" class="ele">                
+                <small>{{timing.Name}}</small>
                 <br/>
-                <small style="position: absolute">{{timing.DriverName}}</small>
+                <small style="position: absolute">{{timing.DriverName}} - {{timing.IRating}}</small>
+                <h3 class="in-pit" [hidden]="!timing.OnPitRoad" style="position: absolute">IN PIT</h3>
             </span>
-            <span class="ele">{{ timing.Position }}</span>
+            <span class="ele">{{timing.Position}}</span>
             <span class="ele">{{timing.ClassPosition}}</span>
             <span class="ele">{{timing.CarLap}}</span>
-            <span class="ele">{{timing.LastLap}}</span>
+            <span class="ele">{{timing.LastLap}}&nbsp;</span>
             <span class="ele">{{timing.PitTime}} <br/> <small style="position: absolute">Prev: {{timing.PitLastTime}}</small></span>
             <span class="ele">{{timing.PittedLap}} &nbsp;</span>
             <span class="ele">{{timing.StintLength}}&nbsp;</span>
