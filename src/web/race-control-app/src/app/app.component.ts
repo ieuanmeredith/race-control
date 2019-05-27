@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { ElementRef, Renderer2 } from "@angular/core";
+import { ElementRef } from "@angular/core";
 import { SmoothieChart, TimeSeries } from "smoothie";
 import { SocketService } from "./socket.service";
 @Component({

@@ -102,16 +102,13 @@ export class App extends React.Component<undefined, any> {
           });
         });
 
-        iracing.on("TelemetryDescription", (data: any) => {
-        });
-
         iracing.on("Telemetry", (data: any) => {
-          this.socket.emit("telemetry", data);
+          this.socket.emit("telemetry", { id: this.state.id, data: data });
         });
 
         iracing.on("SessionInfo", (data: any) => {
           this.sessionCache = data;
-          this.socket.emit("session", data);
+          this.socket.emit("session", { id: this.state.id, data: data });
         });
 
       } else {

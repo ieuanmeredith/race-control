@@ -21,9 +21,14 @@
         padding: 5px 0 0 5px;
         height: 22px;
     }
+
+    #header {
+        position: fixed;
+        background: #263238;
+    }
 </style>
 <ul>
-    <li style="border: 1px solid #000000;">
+    <li id="header" style="border: 1px solid #000000;">
         <div>
             <span class="ele-title" style="min-width: 50px !important;">Car #</span>
             <span style="width: 300px;" class="ele-title">Team Name</span>
@@ -48,7 +53,7 @@
             <span style="width: 300px;" class="ele">                
                 <small>{{timing.Name}}</small>
                 <br/>
-                <small style="position: absolute">{{timing.DriverName}} - {{timing.IRating}}</small>
+                <small style="position: absolute">{{timing.DriverName}} - {{timing.IRating}} - {{timing.LicString}}</small>
                 <h3 class="in-pit" [hidden]="!timing.OnPitRoad" style="position: absolute">IN PIT</h3>
             </span>
             <span class="ele">{{timing.Position}}</span>
