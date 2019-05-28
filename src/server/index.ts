@@ -267,7 +267,7 @@ const receiver: SocketIO.Namespace =
           for (let i = 0; i < drivers.length; i++) {
             if (drivers[i].CarIsPaceCar === 0
               && drivers[i].IsSpectator === 0
-              && data.values.CarIdxPosition[i] >= 0) {
+              && data.values.CarIdxPosition[i] > 0) {
               processLapChange(data, i);
               processPitlane(data, i);
               timingObjects.push({
