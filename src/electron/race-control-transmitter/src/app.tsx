@@ -105,6 +105,10 @@ export class App extends React.Component<undefined, any> {
         });
 
         iracing.on("Telemetry", (data: any) => {
+          this.setState({
+            ["status"]: "Sending data to server"
+          });
+
           const driverid = this.state.id;
           const msg = { "driver_id": driverid, "data": data };
           this.socket.emit("telemetry", msg);

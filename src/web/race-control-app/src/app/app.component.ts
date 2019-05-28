@@ -16,6 +16,20 @@ export class AppComponent implements OnInit {
   public wheelAngle: number;
   public throttleTimeSeries = new TimeSeries();
   public brakeTimeSeries = new TimeSeries();
+
+  public SoC = "";
+  public Deploy = "";
+  public FuelLevel = "";
+  public FuelLapsLeft = "";
+  public FuelPerLap = "";
+  public Delta = "";
+  public BoxBoxBox = false;
+  public Flags = [];
+  public Gear = "";
+  public Temp = "";
+  public SessionTimeRemain = "";
+  public DeployMode = "";
+
   @ViewChild("throttlecanvas") private throttleEl: ElementRef;
   @ViewChild("brakecanvas") private brakeEl: ElementRef;
   constructor(private socketService: SocketService) { }
@@ -47,6 +61,18 @@ export class AppComponent implements OnInit {
         this.throttlePerc = Math.trunc(data.values.Throttle * 100);
         this.brakePerc = Math.trunc(data.values.Brake * 100);
         this.wheelAngle = data.values.SteeringWheelAngle;
+        this.SoC = data.values.SoC;
+        this.Deploy = data.values.Deploy;
+        this.FuelLevel = data.values.FuelLevel;
+        this.FuelLapsLeft = data.values.FuelLapsLeft;
+        this.FuelPerLap = data.values.FuelPerLap;
+        this.Delta = data.values.Delta;
+        this.BoxBoxBox = data.values.BoxBoxBox;
+        this.Flags = data.values.Flags;
+        this.Gear = data.values.Gear;
+        this.Temp = data.values.Temp;
+        this.SessionTimeRemain = data.values.SessionTimeRemain;
+        this.DeployMode = data.values.DeployMode;
 
         this.throttleTimeSeries.append(new Date().getTime(), this.throttlePerc);
         this.brakeTimeSeries.append(new Date().getTime(), this.brakePerc);

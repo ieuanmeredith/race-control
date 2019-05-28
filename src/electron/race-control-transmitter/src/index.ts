@@ -61,7 +61,8 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     width: 330,
     height: 300,
-    title: "Race Control - Transmitter"
+    title: "Race Control - Transmitter",
+    minimizable: false
   });
 
   // and load the index.html of the app.

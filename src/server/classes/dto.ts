@@ -14,7 +14,18 @@ export class Dto {
       "CarIdxF2Time": number[],
       "CarIdxEstTime": number[],
       "SessionTime": number,
-      "SessionTimeRemain": number,
+      "SessionTimeRemain": string,
+      "SoC": string,
+      "Deploy": string,
+      "FuelLevel": string,
+      "FuelLapsLeft": string,
+      "FuelPerLap": string,
+      "Delta": string,
+      "BoxBoxBox": boolean,
+      "Flags": string[],
+      "Gear": string,
+      "Temp": string,
+      "DeployMode": string,
     };
 
   constructor() {
@@ -32,7 +43,18 @@ export class Dto {
       "CarIdxF2Time": [],
       "CarIdxEstTime": [],
       "SessionTime": 0,
-      "SessionTimeRemain": 0,
+      "SessionTimeRemain": "",
+      "SoC": "",
+      "Deploy": "",
+      "FuelLevel": "",
+      "FuelLapsLeft": "",
+      "FuelPerLap": "",
+      "Delta": "",
+      "BoxBoxBox": false,
+      "Flags": [],
+      "Gear": "",
+      "Temp": "",
+      "DeployMode": "",
     };
   }
 }

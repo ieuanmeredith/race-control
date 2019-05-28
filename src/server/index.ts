@@ -69,18 +69,18 @@ function pad(n: string, width: number, z: any) {
 
 function getAvgLap(): number {
   let sum = 0;
-  for (let i = 0; i < this.lapTimeArray.length; i++) {
-    sum += this.lapTimeArray[i];
+  for (let i = 0; i < lapTimeArray.length; i++) {
+    sum += lapTimeArray[i];
   }
-  return sum / this.lapTimeArray.length;
+  return sum / lapTimeArray.length;
 }
 
 function getAvgFuelPerHour(): number {
   let sum = 0;
-  for (let i = 0; i < this.fuelUsageBuffer.length; i++) {
-    sum += this.fuelUsageBuffer[i];
+  for (let i = 0; i < fuelUsageBuffer.length; i++) {
+    sum += fuelUsageBuffer[i];
   }
-  return sum / this.fuelUsageBuffer.length;
+  return sum / fuelUsageBuffer.length;
 }
 
 const processLapChange = (data: any, i: number) => {
@@ -127,7 +127,7 @@ const processPitlane = (data: any, i: number) => {
   }
   // if car is on pit road and counter is 0
   // car has just entered the pits
-  if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] === 0) {
+  if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] === 0 && data.values.CarIdxTrackSurface[i] === "InPitStall") {
     carIdxStintRecord[i].push(data.values.CarIdxLap[i] -
       carIdxPitLapRecord[i][carIdxPitLapRecord[i].length - 1]);
     carIdxPittedStart[i] = data.values.SessionTime;
@@ -138,7 +138,7 @@ const processPitlane = (data: any, i: number) => {
   }
   // if car is on pit road and counter is > 0
   // car is currently in the pits
-  else if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] > 0) {
+  else if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] > 0 && data.values.CarIdxTrackSurface[i] === "InPitStall") {
     const intermediate = (data.values.SessionTime) - (carIdxPittedStart[i]);
     carIdxPitTime[i] =
     intermediate > 0 ? intermediate : 0.1;
@@ -245,6 +245,18 @@ const receiver: SocketIO.Namespace =
         const dto: Dto = new Dto();
         dto.values.Throttle = data.values.Throttle;
         dto.values.Brake = data.values.Brake;
+        dto.values.SoC = soc.toString(),
+        dto.values.Deploy = deploy.toString(),
+        dto.values.FuelLevel = data.values.FuelLevel.toFixed(2),
+        dto.values.FuelLapsLeft = fuelLapsRemaining.toFixed(2),
+        dto.values.FuelPerLap = fuelPerLap.toString(),
+        dto.values.Delta = deltaToSesBest,
+        dto.values.BoxBoxBox = boxboxbox,
+        dto.values.Flags = flags,
+        dto.values.Gear = gear,
+        dto.values.Temp = trackTemp,
+        dto.values.SessionTimeRemain = timeLeft,
+        dto.values.DeployMode = deployMode,
         // convert input to useful value for animating rotation
         dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 ) * -1;
         io.of("web").emit("telemetry_message", dto);
@@ -255,7 +267,7 @@ const receiver: SocketIO.Namespace =
           for (let i = 0; i < drivers.length; i++) {
             if (drivers[i].CarIsPaceCar === 0
               && drivers[i].IsSpectator === 0
-              && data.values.CarIdxPosition[i] > 0) {
+              && data.values.CarIdxPosition[i] >= 0) {
               processLapChange(data, i);
               processPitlane(data, i);
               timingObjects.push({
@@ -276,6 +288,7 @@ const receiver: SocketIO.Namespace =
                 "CarLap": data.values.CarIdxLap[i],
                 "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
                 "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
+                "TrackSurf": data.values.CarIdxTrackSurface[i],
               });
             }
           }

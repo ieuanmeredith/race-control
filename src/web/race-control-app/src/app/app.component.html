@@ -1,3 +1,53 @@
+<style>
+
+  #yellow-flag {
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    background: rgba(255, 255, 0, 0.8);
+    display: none;
+  }
+  #blue-flag {
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    background: rgb(38, 0, 255, 0.8);
+    display: none;
+    overflow: hidden;
+  }
+  #blue-flag .line {
+    width: 120%;
+    height: 47px;
+    background: rgba(255, 255, 0, 0.7);
+    -webkit-transform:
+        translateY(-20px)
+        translateX(5px)
+        rotate(27deg); 
+    transform: rotate(27deg) translateX(5px) translateY(-20px);
+    position: absolute;
+    top: 93px;
+    left: -50px;
+  }
+  #box-box-box {
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    background: rgba(255, 179, 0, 0.9);
+    display: none;
+  }
+  #box-box-box h1 {
+    padding: 0;
+    font-weight: 900;
+    margin: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: -35px;
+  }
+  .show-flag {
+    display: flex !important;
+  }
+</style>
+
 <div style="width: 50px; height: 200px; border: 1px solid #111111; position: relative; display: inline-block;">
   <div style="width: 100%; background: rgb(204, 0, 0); height: 100%; position: absolute; bottom: 0;"
   [ngStyle]="{'max-height': brakePerc + '%'}"></div>
@@ -19,4 +69,25 @@
 
 <div>
     <canvas #brakecanvas id="chart" width="1000" height="120"></canvas>
+</div>
+
+<div id="top-section">
+  <div id="soc"><span>SoC</span> <h1>{{SoC}}</h1></div>
+  <div id="gear"> <h1>{{Gear}}</h1></div>
+  <div id="deploy"><span>Deploy</span> <h1>{{Deploy}}</h1></div>
+  <div id="bot-box-3"><span>Deploy Mode</span> <h2>{{DeployMode}}</h2></div>
+</div>
+
+<div id="bot-box-1"><span>Delta</span> <h2>{{Delta}}</h2></div>
+
+<div id="bot-box-2"><span>Fuel est laps</span> <h2>{{FuelLapsLeft}}</h2></div>
+<div id="bot-box-4"><span>Fuel (L) / Fuel per lap (L)</span> <h2>{{FuelLevel}} / {{FuelPerLap}}</h2></div>
+
+<div id="bot-box-5"><span>Track Temp</span> <h2>{{Temp}}°C</h2></div>
+<div id="bot-box-6"><span>Time Left</span> <h2>{{SessionTimeRemain}}</h2></div>
+
+<div [ngClass]="{'show-flag': Flags.indexOf('BlueWaving') > -1}" id="blue-flag"><div class="line"></div></div>
+<div [ngClass]="{'show-flag': Flags.indexOf('YellowWaving') > -1}" id="yellow-flag"></div>
+<div [ngClass]="{'show-flag': BoxBoxBox || FuelLapsLeft < 1.1}" id="box-box-box">
+  <h1>BOX THIS LAP <br/> {{FuelLevel}} <small>L</small></h1>
 </div>
