@@ -9,8 +9,9 @@ export class SocketService {
   private socket: SocketIOClient.Socket;
 
   public initSocket() {
-    this.socket = io("http://13.209.250.182/web");
-    // this.socket = io("http://localhost:3000/web");
+    // change before running ng build --prod
+    // to specific ip/port for each car/instance
+    this.socket = io("http://xxx.xxx.xxx.xxx:xxxx/web");
   }
 
   public onTelemetryMessage(): Observable<any> {

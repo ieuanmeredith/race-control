@@ -1,8 +1,12 @@
 import * as express from "express";
 import { ITelemetry } from "./classes/telemetry";
 import { Dto } from "./classes/dto";
+
+// get port number from cmd arguments
+const port = process.argv[2];
+
 const app: any = express();
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || port);
 const http: any = require("http").Server(app);
 
 let io: SocketIO.Server = require("socket.io")(http);
@@ -117,65 +121,63 @@ const receiver: SocketIO.Namespace =
     console.log("a transmitter connected");
 
     socket.on("telemetry", (msg: any) => {
-      let timingObjects = [];
-      const data: ITelemetry = msg.data;
-      // process and send telemetry feed
-      // use custom DTO instead of 'data'
-      // to minimize payload size
-      const dto: Dto = new Dto();
-      dto.values.Throttle = data.values.Throttle;
-      dto.values.Brake = data.values.Brake;
-      // convert input to useful value for animating rotation
-      dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 ) * -1;
-      // dto.values.CarIdxClassPosition = data.values.CarIdxClassPosition;
-      // dto.values.CarIdxEstTime = data.values.CarIdxEstTime;
-      // dto.values.CarIdxF2Time = data.values.CarIdxF2Time;
-      // dto.values.CarIdxLap = data.values.CarIdxLap;
-      // dto.values.CarIdxLapCompleted = data.values.CarIdxLapCompleted;
-      // dto.values.CarIdxLapDistPct = data.values.CarIdxLapDistPct;
-      // dto.values.CarIdxOnPitRoad = data.values.CarIdxOnPitRoad;
-      // dto.values.CarIdxPosition = data.values.CarIdxPosition;
-      // dto.values.CarIdxTrackSurface = data.values.CarIdxTrackSurface;
-      // dto.values.SessionTime = data.values.SessionTime;
-      // dto.values.SessionTimeRemain = data.values.SessionTimeRemain;
-      io.of("web").emit("telemetry_message", dto);
-
-      // process and send timing info
-      if (drivers.length > 0) {
-        // process each acive in session (non-spectating/non-dc) driver
-        for (let i = 0; i < drivers.length; i++) {
-          if (drivers[i].CarIsPaceCar === 0
-            && drivers[i].IsSpectator === 0
-            && data.values.CarIdxPosition[i] > 0) {
-            processLapChange(data, i);
-            processPitlane(data, i);
-            timingObjects.push({
-              "Name": drivers[i].TeamName,
-              "DriverName": drivers[i].UserName,
-              "CarNum": drivers[i].CarNumber,
-              "Position": data.values.CarIdxPosition[i],
-              "ClassPosition": data.values.CarIdxClassPosition[i],
-              "OnPitRoad": data.values.CarIdxOnPitRoad[i],
-              "ClassColour": "#" + drivers[i].CarClassColor.toString(16),
-              "IRating": drivers[i].IRating,
-              "LicString": drivers[i].LicString,
-              "LicColor": "#" + drivers[i].LicColor.toString(16),
-              "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
-              "PitTime": carIdxPitTime[i].toFixed(1),
-              "PitLastTime": carIdxPitLastStopTime[i] ? carIdxPitLastStopTime[i].toFixed(1) : 0,
-              "PittedLap": carIdxPittedLap[i],
-              "CarLap": data.values.CarIdxLap[i],
-              "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
-              "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
-            });
-          }
+      const driver_id: any = msg.driver_id;
+      // if driver_id is active driver,
+      // use their telemetry data
+      let activeDriver: boolean = false;
+      for (let i = 0; i < drivers.length; i++) {
+        if (Number(driver_id) === drivers[i].UserID) {
+          activeDriver = true;
         }
-        timingObjects = timingObjects.sort(
-          (a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0)
-        );
       }
+      if (activeDriver) {
+        let timingObjects = [];
+        const data: ITelemetry = msg.data;
+        // process and send telemetry feed
+        const dto: Dto = new Dto();
+        dto.values.Throttle = data.values.Throttle;
+        dto.values.Brake = data.values.Brake;
+        // convert input to useful value for animating rotation
+        dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 ) * -1;
+        io.of("web").emit("telemetry_message", dto);
 
-      io.of("web").emit("timing_message", timingObjects);
+        // process and send timing info
+        if (drivers.length > 0) {
+          // process each acive in session (non-spectating/non-dc) driver
+          for (let i = 0; i < drivers.length; i++) {
+            if (drivers[i].CarIsPaceCar === 0
+              && drivers[i].IsSpectator === 0
+              && data.values.CarIdxPosition[i] > 0) {
+              processLapChange(data, i);
+              processPitlane(data, i);
+              timingObjects.push({
+                "Name": drivers[i].TeamName,
+                "DriverName": drivers[i].UserName,
+                "CarNum": drivers[i].CarNumber,
+                "Position": data.values.CarIdxPosition[i],
+                "ClassPosition": data.values.CarIdxClassPosition[i],
+                "OnPitRoad": data.values.CarIdxOnPitRoad[i],
+                "ClassColour": "#" + drivers[i].CarClassColor.toString(16),
+                "IRating": drivers[i].IRating,
+                "LicString": drivers[i].LicString,
+                "LicColor": "#" + drivers[i].LicColor.toString(16),
+                "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
+                "PitTime": carIdxPitTime[i].toFixed(1),
+                "PitLastTime": carIdxPitLastStopTime[i] ? carIdxPitLastStopTime[i].toFixed(1) : 0,
+                "PittedLap": carIdxPittedLap[i],
+                "CarLap": data.values.CarIdxLap[i],
+                "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
+                "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
+              });
+            }
+          }
+          timingObjects = timingObjects.sort(
+            (a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0)
+          );
+        }
+
+        io.of("web").emit("timing_message", timingObjects);
+      }
     });
 
     socket.on("session", (msg: any) => {
@@ -196,6 +198,6 @@ const receiver: SocketIO.Namespace =
     });
 });
 
-http.listen(3000, function(): void {
-  console.log("listening on *:3000");
+http.listen(port, function(): void {
+  console.log(`listening on *:${port}`);
 });
