@@ -81,6 +81,8 @@ const createWindow = async () => {
   });
 };
 
+// fixing issue with reduced performance when minimized
+app.commandLine.appendSwitch("diable-renderer-backgrounding");
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
