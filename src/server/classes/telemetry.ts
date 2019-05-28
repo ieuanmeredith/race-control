@@ -230,6 +230,9 @@ export interface IValues {
     LFshockDefl_ST: number[];
     LFshockVel: number;
     LFshockVel_ST: number[];
+    EnergyERSBatteryPct: number;
+    EnergyMGU_KLapDeployPct: number;
+    dcMGUKDeployFixed: number;
 }
 
 export interface ITelemetry {

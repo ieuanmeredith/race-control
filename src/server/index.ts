@@ -8,9 +8,7 @@ const port = process.argv[2];
 const app: any = express();
 app.set("port", process.env.PORT || port);
 const http: any = require("http").Server(app);
-
 let io: SocketIO.Server = require("socket.io")(http);
-
 app.get("/", function(req: any, res: any): void {
   res.sendFile(__dirname, "index.html");
 });
@@ -32,7 +30,59 @@ let carIdxPitLastStopTime: number[] = [];
 let carIdxStintRecord: number[][] = [];
 //#endregion
 
+//#region dash state variables
+let soc: number = 0;
+let deploy: number = 0;
+let flags: string[] = [];
+let deltaToSesBest: string = "+0.00";
+let timeLeft: string = "00:00:00";
+let trackTemp: string = "N/A";
+let deployMode: string = "0";
+let lap: number = 0;
+let lapTimeArray: number[] = [];
+
+let bufferLength: number = 18000;
+
+let estLapTime: number = 0;
+let maxFuel: number = 0;
+let fuelUsageBuffer: number[] = [];
+let fuelLapsRemaining: number = 0;
+let fuelPerLap: string | number = 0;
+let fuelRemaining: string | number = 0;
+let boxboxbox: boolean = false;
+
+let rpm: number = 0;
+let firstLightRpm: number = 0;
+let lastLightRpm: number = 0;
+let rpmLightArray: number[];
+let fuelWeightRatio: number = 0.75;
+
+let gear: string = "N";
+//#endregion
+
 //#region private methods
+function pad(n: string, width: number, z: any) {
+  z = z || "0";
+  n = n + "";
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+function getAvgLap(): number {
+  let sum = 0;
+  for (let i = 0; i < this.lapTimeArray.length; i++) {
+    sum += this.lapTimeArray[i];
+  }
+  return sum / this.lapTimeArray.length;
+}
+
+function getAvgFuelPerHour(): number {
+  let sum = 0;
+  for (let i = 0; i < this.fuelUsageBuffer.length; i++) {
+    sum += this.fuelUsageBuffer[i];
+  }
+  return sum / this.fuelUsageBuffer.length;
+}
+
 const processLapChange = (data: any, i: number) => {
   if (!carIdxLapTimes[i]) {
     carIdxLapTimes[i] = [];
@@ -64,12 +114,6 @@ const processLapChange = (data: any, i: number) => {
     carIdxCurrentLap[i] = data.values.CarIdxLap[i];
   }
 };
-
-function pad(num, size) {
-  let s = num + "";
-  while (s.length < size) { s = "0" + s; }
-  return s;
-}
 
 const processPitlane = (data: any, i: number) => {
   if (!carIdxPitLapRecord[i]) {
@@ -110,6 +154,7 @@ const processPitlane = (data: any, i: number) => {
 };
 //#endregion
 
+//#region socket methods
 const web: SocketIO.Namespace =
   io.of("web")
   .on("connection", (socket: any) => {
@@ -131,9 +176,72 @@ const receiver: SocketIO.Namespace =
         }
       }
       if (activeDriver) {
+
         let timingObjects = [];
         const data: ITelemetry = msg.data;
         // process and send telemetry feed
+
+        //#region process dash data
+        soc = Math.floor(data.values.EnergyERSBatteryPct *  100);
+        deploy = Math.floor(data.values.EnergyMGU_KLapDeployPct * 100);
+        flags = data.values.SessionFlags;
+        deployMode = data.values.dcMGUKDeployFixed.toString();
+        trackTemp = data.values.TrackTempCrew.toFixed(2);
+        fuelRemaining = (Math.round(data.values.FuelLevel * 100) / 100).toFixed(2);
+
+        if (fuelUsageBuffer.length <= bufferLength) {
+          if (Math.floor(data.values.Speed) !== 0 && data.values.FuelLevel > 0.2) {
+            fuelUsageBuffer.push(Math.round(data.values.FuelUsePerHour * 100) / 100);
+          }
+        }
+        else {
+          fuelUsageBuffer = fuelUsageBuffer.splice(1, (bufferLength - 1));
+          fuelUsageBuffer.push(Math.round(data.values.FuelUsePerHour * 100) / 100);
+        }
+
+        if (lap !== data.values.Lap) {
+          if (lap === 0) {
+            lap = data.values.Lap;
+          }
+          else {
+            lap = data.values.Lap;
+            const lapTemp = Math.round(data.values.LapLastLapTime * 100) / 100;
+            if (lapTemp > 0 && lapTimeArray.indexOf(lapTemp) === -1) {
+              lapTimeArray.push(lapTemp);
+            }
+
+            if (lapTimeArray.length > 2) {
+              estLapTime = getAvgLap();
+            }
+
+            fuelLapsRemaining < 2 ? boxboxbox = true : boxboxbox = false;
+          }
+        }
+
+        if (maxFuel > 0 && estLapTime > 0) {
+          const lapsPerHour = 3600 / estLapTime;
+          const fuelPerHour = getAvgFuelPerHour();
+          const localFuelPerLap = fuelPerHour / lapsPerHour;
+          // minus 0.2L in kg to exclude last 0.2l from calculations
+          fuelLapsRemaining = (((data.values.FuelLevel * fuelWeightRatio) - (0.2 * fuelWeightRatio)) / localFuelPerLap);
+          fuelPerLap = (data.values.FuelLevel / fuelLapsRemaining).toFixed(2);
+          if (fuelLapsRemaining > 2) { boxboxbox = false; }
+        }
+
+        const delta = data.values.LapDeltaToSessionBestLap.toFixed(2);
+        deltaToSesBest = `${Number(delta) > 0 ? "+" : ""}${delta}`;
+
+        const secondsLeft = Math.floor(data.values.SessionTimeRemain);
+        const hours = Math.floor(secondsLeft / 3600);
+        const minutes = Math.floor((secondsLeft / 60) - hours * 60);
+        const seconds = secondsLeft - Math.floor((secondsLeft / 60)) * 60;
+        timeLeft = `${pad(hours.toString(), 2, 0)}:${pad(minutes.toString(), 2, 0)}:${pad(seconds.toString(), 2, 0)}`;
+        rpm = data.values.RPM;
+        gear = data.values.Gear === 0 ? "N"
+        : data.values.Gear === -1 ? "R"
+        : data.values.Gear.toString();
+        //#endregion
+
         const dto: Dto = new Dto();
         dto.values.Throttle = data.values.Throttle;
         dto.values.Brake = data.values.Brake;
@@ -194,6 +302,35 @@ const receiver: SocketIO.Namespace =
       }
       if (activeDriver) {
         drivers = session.data.DriverInfo.Drivers;
+
+        //#region taking session values for dash
+        if (fuelWeightRatio !== session.data.DriverInfo.DriverCarFuelKgPerLtr) {
+          fuelWeightRatio = session.data.DriverInfo.DriverCarFuelKgPerLtr;
+        }
+        maxFuel = session.data.DriverInfo.DriverCarFuelMaxLtr * fuelWeightRatio;
+
+        if (estLapTime === 0) { estLapTime = session.data.DriverInfo.DriverCarEstLapTime; }
+
+        if (firstLightRpm !== session.data.DriverInfo.DriverCarSLFirstRPM) {
+          firstLightRpm = session.data.DriverInfo.DriverCarSLFirstRPM;
+        }
+        if (lastLightRpm !== session.data.DriverInfo.DriverCarSLLastRPM) {
+          lastLightRpm = session.data.DriverInfo.DriverCarSLLastRPM;
+        }
+
+        if (firstLightRpm === session.data.DriverInfo.DriverCarSLFirstRPM &&
+          lastLightRpm === session.data.DriverInfo.DriverCarSLLastRPM &&
+          !rpmLightArray) {
+            rpmLightArray = [];
+
+            const diff = (lastLightRpm - firstLightRpm) / 10;
+
+            for (let i = 0; i < 10; i++) {
+              if (i === 0) { rpmLightArray.push(firstLightRpm); }
+              else { rpmLightArray.push(rpmLightArray[i - 1] + diff); }
+            }
+          }
+        //#endregion
       }
     });
 });
@@ -201,3 +338,4 @@ const receiver: SocketIO.Namespace =
 http.listen(port, function(): void {
   console.log(`listening on *:${port}`);
 });
+//#endregion
