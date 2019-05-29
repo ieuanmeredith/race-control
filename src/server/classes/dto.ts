@@ -26,6 +26,7 @@ export class Dto {
       "Gear": string,
       "Temp": string,
       "DeployMode": string,
+      "Speed": string
     };
 
   constructor() {
@@ -55,6 +56,7 @@ export class Dto {
       "Gear": "",
       "Temp": "",
       "DeployMode": "",
+      "Speed": ""
     };
   }
 }

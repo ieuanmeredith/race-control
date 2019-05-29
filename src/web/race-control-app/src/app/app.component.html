@@ -1,38 +1,37 @@
 <style>
-
   #yellow-flag {
-    position: absolute;
-    width: 400px;
-    height: 200px;
-    background: rgba(255, 255, 0, 0.8);
+    position: relative;
+    width: 97%;
+    height: 94%;
+    background: rgba(255, 255, 0, 1);
     display: none;
   }
   #blue-flag {
-    position: absolute;
-    width: 400px;
-    height: 200px;
-    background: rgb(38, 0, 255, 0.8);
+    position: relative;
+    width: 97%;
+    height: 94%;
+    background: rgb(38, 0, 255, 1);
     display: none;
     overflow: hidden;
   }
   #blue-flag .line {
-    width: 120%;
-    height: 47px;
-    background: rgba(255, 255, 0, 0.7);
+    width: 140%;
+    height: 27px;
+    background: rgba(255, 255, 0, 1);
     -webkit-transform:
         translateY(-20px)
         translateX(5px)
         rotate(27deg); 
     transform: rotate(27deg) translateX(5px) translateY(-20px);
     position: absolute;
-    top: 93px;
-    left: -50px;
+    top: 33px;
+    left: -70px;
   }
   #box-box-box {
-    position: absolute;
-    width: 400px;
-    height: 200px;
-    background: rgba(255, 179, 0, 0.9);
+    position: relative;
+    width: 97%;
+    height: 94%;
+    background: rgba(255, 179, 0, 1);
     display: none;
   }
   #box-box-box h1 {
@@ -46,48 +45,81 @@
   .show-flag {
     display: flex !important;
   }
+h1 {
+  font-size: 1.5em;
+}
+.parent {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 2fr 2fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+.parent div { border: 1px solid #627680; padding: 3px;}
+.div1 { grid-area: 1 / 1 / 4 / 2; }
+.div2 { grid-area: 1 / 2 / 2 / 3; }
+.div3 { grid-area: 2 / 2 / 3 / 3; }
+.div4 { grid-area: 3 / 2 / 4 / 3; }
+.div5 { grid-area: 1 / 3 / 2 / 4; }
+.div6 { grid-area: 2 / 3 / 3 / 4; }
+.div7 { grid-area: 3 / 3 / 4 / 4; }
+.div8 { grid-area: 1 / 4 / 2 / 5; }
+.div9 { grid-area: 2 / 4 / 3 / 5; }
+.div10 { grid-area: 3 / 4 / 4 / 5; }
+.div11 { grid-area: 1 / 5 / 2 / 6; }
+.div12 { grid-area: 2 / 5 / 3 / 6; }
+.div13 { grid-area: 3 / 5 / 4 / 6; padding: 0 !important; }
+.div14 { grid-area: 4 / 1 / 5 / 6; }
+.div15 { grid-area: 5 / 1 / 6 / 6; }
+
 </style>
 
-<div style="width: 50px; height: 200px; border: 1px solid #111111; position: relative; display: inline-block;">
-  <div style="width: 100%; background: rgb(204, 0, 0); height: 100%; position: absolute; bottom: 0;"
-  [ngStyle]="{'max-height': brakePerc + '%'}"></div>
-</div>
-
-<div style="width: 50px; height: 200px; border: 1px solid #111111; position: relative; display: inline-block;">
-  <div style="width: 100%; background: #07c; height: 100%; position: absolute; bottom: 0;"
-  [ngStyle]="{'max-height': throttlePerc + '%'}"></div>
-</div>
-
-<div style="display: inline-block; margin-left: 30px;">
-  <img src="../assets/img/wheel.png" style="width: 120px; height: 78px;"
-    [ngStyle]="{'transform': 'rotate(' + wheelAngle + 'deg)'}"/>
-</div>
-
-<div>
-  <canvas #throttlecanvas id="chart" width="1000" height="120"></canvas>
-</div>
-
-<div>
-    <canvas #brakecanvas id="chart" width="1000" height="120"></canvas>
-</div>
-
-<div id="top-section">
-  <div id="soc"><span>SoC</span> <h1>{{SoC}}</h1></div>
-  <div id="gear"> <h1>{{Gear}}</h1></div>
-  <div id="deploy"><span>Deploy</span> <h1>{{Deploy}}</h1></div>
-  <div id="bot-box-3"><span>Deploy Mode</span> <h2>{{DeployMode}}</h2></div>
-</div>
-
-<div id="bot-box-1"><span>Delta</span> <h2>{{Delta}}</h2></div>
-
-<div id="bot-box-2"><span>Fuel est laps</span> <h2>{{FuelLapsLeft}}</h2></div>
-<div id="bot-box-4"><span>Fuel (L) / Fuel per lap (L)</span> <h2>{{FuelLevel}} / {{FuelPerLap}}</h2></div>
-
-<div id="bot-box-5"><span>Track Temp</span> <h2>{{Temp}}°C</h2></div>
 <div id="bot-box-6"><span>Time Left</span> <h2>{{SessionTimeRemain}}</h2></div>
-
-<div [ngClass]="{'show-flag': Flags.indexOf('BlueWaving') > -1}" id="blue-flag"><div class="line"></div></div>
-<div [ngClass]="{'show-flag': Flags.indexOf('YellowWaving') > -1}" id="yellow-flag"></div>
-<div [ngClass]="{'show-flag': BoxBoxBox || FuelLapsLeft < 1.1}" id="box-box-box">
-  <h1>BOX THIS LAP <br/> {{FuelLevel}} <small>L</small></h1>
+<div class="parent" style="width: 1000px;">
+  <div style="position: relative;" class="div1">
+    <div style="width: 50px; height: 93%; border: 1px solid #111111; position: absolute; display: inline-block; bottom: 2px;">
+      <div style="width: 100%; background: rgb(204, 0, 0); height: 100%; position: absolute; bottom: 0; border:none;"
+      [ngStyle]="{'max-height': brakePerc + '%'}"></div>
+    </div>
+    
+    <div style="width: 50px; height: 93%; border: 1px solid #111111; position: absolute; display: inline-block;bottom: 2px; right: 30px;">
+      <div style="width: 100%; background: #07c; height: 100%; position: absolute; bottom: 0; border: none;"
+      [ngStyle]="{'max-height': throttlePerc + '%'}"></div>
+    </div>
+  </div>
+  <div class="div2">
+    <div style="display: inline-block; margin-left: 30px; border: none;">
+      <img src="../assets/img/wheel.png" style="width: 120px; height: 78px;"
+        [ngStyle]="{'transform': 'rotate(' + wheelAngle + 'deg)'}"/>
+    </div>
+  </div>
+  <div class="div3"><small>Gear</small> <h1>{{Gear}}</h1></div>
+  <div class="div4"><small>Speed</small> <h1>{{Speed}}</h1></div>
+  <div class="div5"><small>SoC</small> <h1>{{SoC}}</h1></div>
+  <div class="div6"><small>Delta</small> <h1>{{Delta}}</h1></div>
+  <div class="div7"><small>Track Temp</small> <h1>{{Temp}}°C</h1></div>
+  <div class="div8"><small>Deploy</small> <h1>{{Deploy}}</h1></div>
+  <div class="div9"><small>Fuel(L)/Fuel Per Lap(L)</small> <h1>{{FuelLevel}} / {{FuelPerLap}}</h1></div>
+  <div class="div10">10</div>
+  <div class="div11"><small>Deploy Mode</small> <h1>{{DeployMode}}</h1></div>
+  <div class="div12"><small>Fuel Est Laps</small> <h1>{{FuelLapsLeft}}</h1></div>
+  <div class="div13">
+    <div style="border: none;" [ngClass]="{'show-flag': Flags.indexOf('BlueWaving') > -1}" id="blue-flag"><div class="line"></div></div>
+    <div style="border: none;" [ngClass]="{'show-flag': Flags.indexOf('YellowWaving') > -1}" id="yellow-flag"></div>
+    <div style="border: none;" [ngClass]="{'show-flag': BoxBoxBox || FuelLapsLeft < 1.1}" id="box-box-box">
+      <h1 style="position: relative; top: 5px; font-size: 1em;">BOX THIS LAP <br/> {{FuelLevel}} <small>L</small></h1>
+    </div>
+  </div>
+  <div class="div14">
+    <div style="border: none;">
+      <small>Throttle Trace</small>
+      <canvas #throttlecanvas id="chart" width="985px" height="150px"></canvas>
+    </div>
+  </div>
+  <div class="div15">
+    <small>Brake Trace</small>
+    <div style="border: none;">
+        <canvas #brakecanvas id="chart" width="985px" height="150px"></canvas>
+    </div>
+  </div>
 </div>

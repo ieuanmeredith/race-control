@@ -23,12 +23,13 @@ export class AppComponent implements OnInit {
   public FuelLapsLeft = 0;
   public FuelPerLap = "";
   public Delta = "";
-  public BoxBoxBox = false;
+  public BoxBoxBox = true;
   public Flags = [];
   public Gear = "";
   public Temp = "";
   public SessionTimeRemain = "";
   public DeployMode = "";
+  public Speed = "";
 
   @ViewChild("throttlecanvas") private throttleEl: ElementRef;
   @ViewChild("brakecanvas") private brakeEl: ElementRef;
@@ -73,6 +74,7 @@ export class AppComponent implements OnInit {
         this.Temp = data.values.Temp;
         this.SessionTimeRemain = data.values.SessionTimeRemain;
         this.DeployMode = data.values.DeployMode;
+        this.Speed = data.values.Speed;
 
         this.throttleTimeSeries.append(new Date().getTime(), this.throttlePerc);
         this.brakeTimeSeries.append(new Date().getTime(), this.brakePerc);
