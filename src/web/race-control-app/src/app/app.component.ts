@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   public SoC = "";
   public Deploy = "";
   public FuelLevel = "";
-  public FuelLapsLeft = "";
+  public FuelLapsLeft = 0;
   public FuelPerLap = "";
   public Delta = "";
   public BoxBoxBox = false;
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
         this.SoC = data.values.SoC;
         this.Deploy = data.values.Deploy;
         this.FuelLevel = data.values.FuelLevel;
-        this.FuelLapsLeft = data.values.FuelLapsLeft;
+        this.FuelLapsLeft = Number(data.values.FuelLapsLeft);
         this.FuelPerLap = data.values.FuelPerLap;
         this.Delta = data.values.Delta;
         this.BoxBoxBox = data.values.BoxBoxBox;
