@@ -1,7 +1,7 @@
 {
   "name": "race-control-transmitter",
   "productName": "Race Control - Transmitter",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Race Control Transmitter App",
   "main": "src/index.ts",
   "scripts": {

@@ -131,6 +131,7 @@ export class App extends React.Component<undefined, any> {
     return (
       <div>
         <h1>Race Control Transmitter</h1>
+
         {
           this.state.connected ?
 
@@ -153,6 +154,7 @@ export class App extends React.Component<undefined, any> {
               <input type="submit" value="Connect" />
             </form>
         }
+        <br/><small>v1.0.3</small>
       </div>
     );
   }
