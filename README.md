@@ -1,4 +1,4 @@
-# Race Control - An iRacing telemetry & timing solution
+# Race Control - An iRacing telemetry & timing system
 
 This project is designed to provide a means to view real time telemetry and timing data from the iRacing simulator. Is it currently a work in progress and any/all aspects of the design and running procedure are likely to change at any time.
 
