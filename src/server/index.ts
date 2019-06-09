@@ -87,7 +87,7 @@ const processLapChange = (data: any, i: number) => {
   if (!carIdxLapTimes[i]) {
     carIdxLapTimes[i] = [];
   }
-  if (carIdxCurrentLap[i] === -1) {
+  if (data.values.CarIdxLap[i] === -1) {
     return;
   }
   // if telemetry lap is different to lap in memory
@@ -185,7 +185,9 @@ const receiver: SocketIO.Namespace =
         soc = Math.floor(data.values.EnergyERSBatteryPct *  100);
         deploy = Math.floor(data.values.EnergyMGU_KLapDeployPct * 100);
         flags = data.values.SessionFlags;
-        deployMode = data.values.dcMGUKDeployFixed.toString();
+        if (data.values.dcMGUKDeployFixed) {
+          deployMode = data.values.dcMGUKDeployFixed.toString();
+        }
         trackTemp = data.values.TrackTempCrew.toFixed(2);
         fuelRemaining = (Math.round(data.values.FuelLevel * 100) / 100).toFixed(2);
 
@@ -257,7 +259,7 @@ const receiver: SocketIO.Namespace =
         dto.values.Temp = trackTemp;
         dto.values.SessionTimeRemain = timeLeft;
         dto.values.DeployMode = deployMode;
-        dto.values.Speed = data.values.Speed.toFixed(0);
+        dto.values.Speed = (data.values.Speed * 3.6).toFixed(0) + " kph ";
         // convert input to useful value for animating rotation
         dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 ) * -1;
         io.of("web").emit("telemetry_message", dto);
