@@ -2,7 +2,7 @@
 
 ![race control](https://i.gyazo.com/ad081f8d5d5ad3695c41db17f5756b45.gif)
 
-![race control](https://imgur.com/361a8a99-3b53-4798-91e6-5cf119a59842)
+![race control](https://i.imgur.com/dsGJd8a.png)
 
 This project is designed to provide a means to view real time telemetry and timing data from the iRacing simulator. Is it currently a work in progress and any/all aspects of the design and running procedure are likely to change at any time.
 
