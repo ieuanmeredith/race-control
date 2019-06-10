@@ -20,7 +20,12 @@ export class TimingComponent implements OnInit {
     this.socketService.initSocket();
 
     this.socketService.onTimingMessage().subscribe((data: any) => {
-      this.timingObjects = data;
+      for (let i = 0; i < this.timingObjects.length; i++) {
+        this.timingObjects = data;
+        if (this.timingObjects[i] !== data[i]) {
+          this.timingObjects[i] = data[i];
+        }
+      }
     });
 
     this.socketService.onEvent("connect").subscribe(() => {
