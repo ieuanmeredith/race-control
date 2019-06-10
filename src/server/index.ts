@@ -68,7 +68,7 @@ const pad = (n: string, width: number, z: any) => {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
 
-const getAvgLap =(): number => {
+const getAvgLap = (): number => {
   let sum = 0;
   for (let i = 0; i < lapTimeArray.length; i++) {
     sum += lapTimeArray[i];
