@@ -2,9 +2,9 @@
     <li id="header" style="border: 1px solid #000000;">
         <div>
             <span class="ele-title" style="min-width: 50px !important;">Car #</span>
-            <span style="width: 300px;" class="ele-title">Team Name</span>
-            <span class="ele-title" style="min-width: 50px !important;">Pos</span>
+            <!-- <span class="ele-title" style="min-width: 50px !important;">Pos</span> -->
             <span class="ele-title">Class Pos</span>
+            <span style="width: 300px;" class="ele-title">Team Name</span>
             <span class="ele-title" style="min-width: 50px !important;">Lap</span>
             <span class="ele-title" style="min-width: 50px !important;">Gap</span>
             <span class="ele-title">Last Lap</span>
@@ -21,18 +21,17 @@
             <span class="ele" style="min-width: 50px !important;">
                 <b style="position: relative; top: 8px; left: 5px;">{{timing.CarNum}}</b>
             </span>
-
+            <!-- <span class="ele" style="min-width: 50px !important;">{{timing.Position}}</span> -->
+            <span class="ele">{{timing.ClassPosition}}</span>
             <span style="width: 300px; position: relative;" class="ele">                
                 <small [hidden]="timing.Name === timing.DriverName">{{timing.Name}}</small>
                 <br/>
-                <small style="position: absolute;">{{timing.DriverName}} - {{timing.IRating}} - {{timing.LicString}}</small>
+                <small style="position: absolute;">{{timing.DriverName}} - <strong>{{timing.IRating}}</strong> - {{timing.LicString}}</small>
                 <h3 class="in-pit" [hidden]="!timing.OnPitRoad" 
                     style="position: absolute; top: -15px; left: 245px;">
                     IN PIT
                 </h3>
             </span>
-            <span class="ele" style="min-width: 50px !important;">{{timing.Position}}</span>
-            <span class="ele">{{timing.ClassPosition}}</span>
             <span class="ele" style="min-width: 50px !important;">{{timing.CarLap}}</span>
             <span class="ele" style="min-width: 50px !important;">{{timing.Gap}}</span>
             <span class="ele">{{timing.LastLap}}&nbsp;</span>

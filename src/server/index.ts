@@ -119,8 +119,13 @@ const processLapChange = (data: any, i: number) => {
     if (carIdxPosition === 1) { carIdxGapInfront[i] = "---"; }
     else {
       for (let p = 0; p < data.values.CarIdxPosition.length; p++) {
-        if (data.values.carIdxPosition[p] === (carIdxPosition - 1)) {
-          carIdxGapInfront[i] = (carIdxCurrentLapStartTime[i] - carIdxCurrentLapStartTime[p]).toFixed(2);
+        if (data.values.CarIdxPosition[p] === (carIdxPosition - 1)) {
+          if (data.values.CarIdxLap[i] === data.values.CarIdxLap[p]) {
+            carIdxGapInfront[i] = (carIdxCurrentLapStartTime[i] - carIdxCurrentLapStartTime[p]).toFixed(2);
+          }
+          else {
+            carIdxGapInfront[i] = `${data.values.CarIdxLap[p] - data.values.CarIdxLap[i]} L`;
+          }
           break;
         }
       }
