@@ -23,6 +23,7 @@ let currentSessionNum: number = 0;
 let carIdxCurrentLap: number[] = [];
 let carIdxCurrentLapStartTime: number[] = [];
 let carIdxLapTimes: string[][] = [];
+let carIdxGapInfront: string[] = [];
 
 let carIdxPittedLap: number[] = [];
 let carIdxPittedStart: number[] = [];
@@ -112,6 +113,18 @@ const processLapChange = (data: any, i: number) => {
     carIdxCurrentLapStartTime[i] = sessionTime;
     // update current lap to new value
     carIdxCurrentLap[i] = data.values.CarIdxLap[i];
+
+    // process gap on lap change
+    const carIdxPosition = data.values.CarIdxPosition[i];
+    if (carIdxPosition === 1) { carIdxGapInfront[i] = "---"; }
+    else {
+      for (let p = 0; p < data.values.CarIdxPosition.length; p++) {
+        if (data.values.carIdxPosition[p] === (carIdxPosition - 1)) {
+          carIdxGapInfront[i] = (carIdxCurrentLapStartTime[i] - carIdxCurrentLapStartTime[p]).toFixed(2);
+          break;
+        }
+      }
+    }
   }
 };
 
@@ -150,7 +163,7 @@ const processPitlane = (data: any, i: number) => {
   // if car is not on pit road
   // set pit time to 0
   // check for different lap to try and counteract telemetry gaps
-  else if (!data.values.CarIdxOnPitRoad[i] && data.vales.CarIdxLap[i] !== carIdxPittedLap[i]) {
+  else if (!data.values.CarIdxOnPitRoad[i] && data.values.CarIdxLap[i] !== carIdxPittedLap[i]) {
     if (carIdxPitTime[i] > 0 ) {
       carIdxPitLastStopTime[i] = carIdxPitTime[i];
       carIdxPitTime[i] = 0;
@@ -312,6 +325,7 @@ const receiver: SocketIO.Namespace =
                 "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
                 "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
                 "TrackSurf": data.values.CarIdxTrackSurface[i],
+                "Gap": carIdxGapInfront[i]
               });
             }
           }
