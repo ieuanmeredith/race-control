@@ -178,6 +178,7 @@ const receiver: SocketIO.Namespace =
       for (let i = 0; i < drivers.length; i++) {
         if (Number(driver_id) === drivers[i].UserID) {
           activeDriver = true;
+          break;
         }
       }
       if (activeDriver) {
@@ -332,6 +333,7 @@ const receiver: SocketIO.Namespace =
       for (let i = 0; i < session.data.DriverInfo.Drivers.length; i++) {
         if (Number(driver_id) === session.data.DriverInfo.Drivers[i].UserID) {
           activeDriver = true;
+          break;
         }
       }
       if (activeDriver) {
