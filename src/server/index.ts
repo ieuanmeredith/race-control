@@ -62,27 +62,27 @@ let gear: string = "N";
 //#endregion
 
 //#region private methods
-function pad(n: string, width: number, z: any) {
+const pad = (n: string, width: number, z: any) => {
   z = z || "0";
   n = n + "";
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-}
+};
 
-function getAvgLap(): number {
+const getAvgLap =(): number => {
   let sum = 0;
   for (let i = 0; i < lapTimeArray.length; i++) {
     sum += lapTimeArray[i];
   }
   return sum / lapTimeArray.length;
-}
+};
 
-function getAvgFuelPerHour(): number {
+const getAvgFuelPerHour = (): number => {
   let sum = 0;
   for (let i = 0; i < fuelUsageBuffer.length; i++) {
     sum += fuelUsageBuffer[i];
   }
   return sum / fuelUsageBuffer.length;
-}
+};
 
 const processLapChange = (data: any, i: number) => {
   if (!carIdxLapTimes[i]) {
