@@ -13,8 +13,11 @@ app.get("/", function(req: any, res: any): void {
   res.sendFile(__dirname, "index.html");
 });
 
+let sessions: any[] = [];
+
 //#region timing state variables
 let drivers: any[] = [];
+let currentSessionNum: number = 0;
 
 // lap time array definitions
 let carIdxCurrentLap: number[] = [];
@@ -52,9 +55,6 @@ let fuelRemaining: string | number = 0;
 let boxboxbox: boolean = false;
 
 let rpm: number = 0;
-let firstLightRpm: number = 0;
-let lastLightRpm: number = 0;
-let rpmLightArray: number[];
 let fuelWeightRatio: number = 0.75;
 
 let gear: string = "N";
@@ -128,8 +128,12 @@ const processPitlane = (data: any, i: number) => {
   // if car is on pit road and counter is 0
   // car has just entered the pits
   if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] === 0 && data.values.CarIdxTrackSurface[i] === "InPitStall") {
-    carIdxStintRecord[i].push(data.values.CarIdxLap[i] -
-      carIdxPitLapRecord[i][carIdxPitLapRecord[i].length - 1]);
+    if (carIdxPitLapRecord[i].length === 0) {
+      carIdxStintRecord[i].push(data.values.CarIdxLap[i]);
+    } else {
+      carIdxStintRecord[i].push(data.values.CarIdxLap[i] -
+        carIdxPitLapRecord[i][carIdxPitLapRecord[i].length - 1]);
+    }
     carIdxPittedStart[i] = data.values.SessionTime;
     carIdxPittedLap[i] = data.values.CarIdxLap[i];
     carIdxPitLapRecord[i].push(data.values.CarIdxLap[i]);
@@ -141,11 +145,12 @@ const processPitlane = (data: any, i: number) => {
   else if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] > 0 && data.values.CarIdxTrackSurface[i] === "InPitStall") {
     const intermediate = (data.values.SessionTime) - (carIdxPittedStart[i]);
     carIdxPitTime[i] =
-    intermediate > 0 ? intermediate : 0.1;
+      intermediate > 0.1 ? intermediate : 0.1;
   }
   // if car is not on pit road
   // set pit time to 0
-  else if (!data.values.CarIdxOnPitRoad[i]) {
+  // check for different lap to try and counteract telemetry gaps
+  else if (!data.values.CarIdxOnPitRoad[i] && data.vales.CarIdxLap[i] !== carIdxPittedLap[i]) {
     if (carIdxPitTime[i] > 0 ) {
       carIdxPitLastStopTime[i] = carIdxPitTime[i];
       carIdxPitTime[i] = 0;
@@ -179,7 +184,21 @@ const receiver: SocketIO.Namespace =
 
         let timingObjects = [];
         const data: ITelemetry = msg.data;
-        // process and send telemetry feed
+        // check for session change i.e. practice -> race
+        if (currentSessionNum !== data.values.SessionNum) {
+          // reset timing data
+          carIdxCurrentLap = [];
+          carIdxCurrentLapStartTime = [];
+          carIdxLapTimes = [];
+          carIdxPittedLap = [];
+          carIdxPittedStart = [];
+          carIdxPitTime = [];
+          carIdxPitLapRecord = [];
+          carIdxPitLastStopTime = [];
+          carIdxStintRecord = [];
+          // set current session num
+          currentSessionNum = data.values.SessionNum;
+        }
 
         //#region process dash data
         soc = Math.floor(data.values.EnergyERSBatteryPct *  100);
@@ -299,7 +318,6 @@ const receiver: SocketIO.Namespace =
             (a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0)
           );
         }
-
         io.of("web").emit("timing_message", timingObjects);
       }
     });
@@ -317,8 +335,12 @@ const receiver: SocketIO.Namespace =
         }
       }
       if (activeDriver) {
-        drivers = session.data.DriverInfo.Drivers;
-
+        if (sessions !== session.SessionInfo.Sessions) {
+          sessions = session.SessionInfo.Sessions;
+        }
+        if (drivers !== session.data.DriverInfo.Drivers) {
+          drivers = session.data.DriverInfo.Drivers;
+        }
         //#region taking session values for dash
         if (fuelWeightRatio !== session.data.DriverInfo.DriverCarFuelKgPerLtr) {
           fuelWeightRatio = session.data.DriverInfo.DriverCarFuelKgPerLtr;
@@ -326,26 +348,6 @@ const receiver: SocketIO.Namespace =
         maxFuel = session.data.DriverInfo.DriverCarFuelMaxLtr * fuelWeightRatio;
 
         if (estLapTime === 0) { estLapTime = session.data.DriverInfo.DriverCarEstLapTime; }
-
-        if (firstLightRpm !== session.data.DriverInfo.DriverCarSLFirstRPM) {
-          firstLightRpm = session.data.DriverInfo.DriverCarSLFirstRPM;
-        }
-        if (lastLightRpm !== session.data.DriverInfo.DriverCarSLLastRPM) {
-          lastLightRpm = session.data.DriverInfo.DriverCarSLLastRPM;
-        }
-
-        if (firstLightRpm === session.data.DriverInfo.DriverCarSLFirstRPM &&
-          lastLightRpm === session.data.DriverInfo.DriverCarSLLastRPM &&
-          !rpmLightArray) {
-            rpmLightArray = [];
-
-            const diff = (lastLightRpm - firstLightRpm) / 10;
-
-            for (let i = 0; i < 10; i++) {
-              if (i === 0) { rpmLightArray.push(firstLightRpm); }
-              else { rpmLightArray.push(rpmLightArray[i - 1] + diff); }
-            }
-          }
         //#endregion
       }
     });
