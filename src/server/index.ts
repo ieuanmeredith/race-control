@@ -330,7 +330,8 @@ const receiver: SocketIO.Namespace =
                 "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
                 "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
                 "TrackSurf": data.values.CarIdxTrackSurface[i],
-                "Gap": carIdxGapInfront[i]
+                "Gap": carIdxGapInfront[i],
+                "DistDegree": 3.6 * (data.values.CarIdxLapDistPct[i] * 100)
               });
             }
           }
