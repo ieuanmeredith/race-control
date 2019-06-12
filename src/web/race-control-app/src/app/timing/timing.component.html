@@ -1,43 +1,52 @@
-<ul style="position: fixed; z-index: 2;">
-    <li id="header" style="border: 1px solid #000000;">
-        <div>
-            <span class="ele-title" style="min-width: 50px !important;">Car #</span>
-            <!-- <span class="ele-title" style="min-width: 50px !important;">Pos</span> -->
-            <span class="ele-title">Class Pos</span>
-            <span style="width: 300px;" class="ele-title">Team Name</span>
-            <span class="ele-title" style="min-width: 50px !important;">Lap</span>
-            <span class="ele-title" style="min-width: 50px !important;">Gap</span>
-            <span class="ele-title">Last Lap</span>
-            <span class="ele-title">Pit Timer</span>
-            <span class="ele-title">Pitted Lap</span>
-            <span class="ele-title">Stint Length</span>
-        </div>
-    </li>
-</ul>
-<ul style="position: relative; top: 30px; z-index: 1;">
-    <li style="border: 1px solid #000000;" *ngFor="let timing of timingObjects;">
-        <div [ngStyle]="{'background': timing.ClassColour}" style="color: #333333;">
+<div>
+    <ul style="position: fixed; z-index: 2;">
+        <li id="header" style="border: 1px solid #000000;">
+            <div>
+                <span class="ele-title" style="min-width: 50px !important;">Car #</span>
+                <!-- <span class="ele-title" style="min-width: 50px !important;">Pos</span> -->
+                <span class="ele-title">Class Pos</span>
+                <span style="width: 300px;" class="ele-title">Team Name</span>
+                <span class="ele-title" style="min-width: 50px !important;">Lap</span>
+                <span class="ele-title" style="min-width: 50px !important;">Gap</span>
+                <span class="ele-title">Last Lap</span>
+                <span class="ele-title">Pit Timer</span>
+                <span class="ele-title">Pitted Lap</span>
+                <span class="ele-title">Stint Length</span>
+            </div>
+        </li>
+    </ul>
+    <ul style="position: relative; top: 30px; z-index: 1;">
+        <li style="border: 1px solid #000000;" *ngFor="let timing of timingObjects;">
+            <div [ngStyle]="{'background': timing.ClassColour}" style="color: #333333;">
 
-            <span class="ele" style="min-width: 50px !important;">
-                <b style="position: relative; top: 8px; left: 5px;">{{timing.CarNum}}</b>
-            </span>
-            <!-- <span class="ele" style="min-width: 50px !important;">{{timing.Position}}</span> -->
-            <span class="ele">{{timing.ClassPosition}}</span>
-            <span style="width: 300px; position: relative;" class="ele">                
-                <small [hidden]="timing.Name === timing.DriverName">{{timing.Name}}</small>
-                <br/>
-                <small style="position: absolute;">{{timing.DriverName}} - <strong>{{timing.IRating}}</strong> - {{timing.LicString}}</small>
-                <h3 class="in-pit" [hidden]="!timing.OnPitRoad" 
-                    style="position: absolute; top: -15px; left: 245px;">
-                    IN PIT
-                </h3>
-            </span>
-            <span class="ele" style="min-width: 50px !important;">{{timing.CarLap}}</span>
-            <span class="ele" style="min-width: 50px !important;">{{timing.Gap}}</span>
-            <span class="ele">{{timing.LastLap}}&nbsp;</span>
-            <span class="ele">{{timing.PitTime}} <br/> <small style="position: absolute">Prev: {{timing.PitLastTime}}</small></span>
-            <span class="ele">{{timing.PittedLap}} &nbsp;</span>
-            <span class="ele">{{timing.StintLength}}&nbsp;</span>
-        </div>
-    </li>
-</ul>
+                <span class="ele" style="min-width: 50px !important;">
+                    <b style="position: relative; top: 8px; left: 5px;">{{timing.CarNum}}</b>
+                </span>
+                <!-- <span class="ele" style="min-width: 50px !important;">{{timing.Position}}</span> -->
+                <span class="ele">{{timing.ClassPosition}}</span>
+                <span style="width: 300px; position: relative;" class="ele">                
+                    <small [hidden]="timing.Name === timing.DriverName">{{timing.Name}}</small>
+                    <br/>
+                    <small style="position: absolute;">{{timing.DriverName}} - <strong>{{timing.IRating}}</strong> - {{timing.LicString}}</small>
+                    <h3 class="in-pit" [hidden]="!timing.OnPitRoad" 
+                        style="position: absolute; top: -15px; left: 245px;">
+                        IN PIT
+                    </h3>
+                </span>
+                <span class="ele" style="min-width: 50px !important;">{{timing.CarLap}}</span>
+                <span class="ele" style="min-width: 50px !important;">{{timing.Gap}}</span>
+                <span class="ele">{{timing.LastLap}}&nbsp;</span>
+                <span class="ele">{{timing.PitTime}} <br/> <small style="position: absolute">Prev: {{timing.PitLastTime}}</small></span>
+                <span class="ele">{{timing.PittedLap}} &nbsp;</span>
+                <span class="ele">{{timing.StintLength}}&nbsp;</span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="map">
+    <div class="start-line"></div>
+    <div class="map-car" *ngFor="let car of timingObjects;" [ngStyle]="{'background': car.ClassColour, 'transform': 'rotate('+ car.DistDegree +'deg) translate(210px)'}">
+        <span [ngStyle]="{'transform': 'rotate( -'+ car.DistDegree +'deg)'}">{{car.CarNum}}</span>
+    </div>
+</div>

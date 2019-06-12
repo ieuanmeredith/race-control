@@ -24,3 +24,41 @@ span.ele-title {
 #header {
   background: #263238;
 }
+
+.map {
+  width: 400px; 
+  height: 400px; 
+  border-radius: 50%; 
+  border: 20px solid #000; 
+  position: relative; 
+  margin: 20px 0 0 20px; 
+  position: fixed; 
+  right: 50px;
+  .start-line {
+    width: 60px; 
+    height: 5px; 
+    position: absolute; 
+    top: 50%; 
+    left: 95%; 
+    background: #000;
+    border-top: 5px solid #eee;
+  }
+  
+  .map-car {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%;
+    position: absolute; 
+    left: 50%; 
+    top: 50%; 
+    margin-left: -20px; 
+    margin-top: -20px;
+    span {
+      position: absolute; 
+      top: 10px;
+      text-align: center; 
+      width: 100%; 
+      color: #000;
+    }
+  }
+}
