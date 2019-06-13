@@ -357,8 +357,8 @@ const receiver: SocketIO.Namespace =
         }
       }
       if (activeDriver) {
-        if (sessions !== session.SessionInfo.Sessions) {
-          sessions = session.SessionInfo.Sessions;
+        if (sessions !== session.data.SessionInfo.Sessions) {
+          sessions = session.data.SessionInfo.Sessions;
         }
         if (drivers !== session.data.DriverInfo.Drivers) {
           drivers = session.data.DriverInfo.Drivers;

@@ -33,7 +33,8 @@ span.ele-title {
   position: relative; 
   margin: 20px 0 0 20px; 
   position: fixed; 
-  right: 50px;
+  right: 30px;
+  top: 0px;
   .start-line {
     width: 60px; 
     height: 5px; 
@@ -53,6 +54,7 @@ span.ele-title {
     top: 50%; 
     margin-left: -20px; 
     margin-top: -20px;
+    border: 1px solid #000;
     span {
       position: absolute; 
       top: 10px;
