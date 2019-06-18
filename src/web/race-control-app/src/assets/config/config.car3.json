@@ -1,0 +1,8 @@
+{
+  "env": {
+    "name": "PROD"
+     },
+    "socketService": {
+    "url": "http://localhost:5247/web"
+     }
+}

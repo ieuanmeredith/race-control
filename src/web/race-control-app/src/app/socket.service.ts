@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import * as io from "socket.io-client";
+import { AppConfig } from './config/app.config';
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +12,7 @@ export class SocketService {
   public initSocket() {
     // change before running ng build --prod
     // to specific ip/port for each car/instance
-    this.socket = io("http://xxx.xxx.xxx.xxx:xxxx/web");
+    this.socket = io(AppConfig.settings.socketService.url);
   }
 
   public onTelemetryMessage(): Observable<any> {

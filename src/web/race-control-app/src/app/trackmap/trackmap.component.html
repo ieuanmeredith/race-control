@@ -1,0 +1,8 @@
+
+<div class="map">
+  <div class="start-line"></div>
+  <div class="map-car" *ngFor="let car of timingObjects;"
+      [ngStyle]="{'background': car.ClassColour, 'transform': 'rotate('+ car.DistDegree +'deg) translate(210px)'}">
+      <span [ngStyle]="{'transform': 'rotate( -'+ car.DistDegree +'deg)'}">{{car.CarNum}}</span>
+  </div>
+</div>

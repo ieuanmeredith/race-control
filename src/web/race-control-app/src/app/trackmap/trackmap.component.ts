@@ -2,12 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { SocketService } from "../socket.service";
 
 @Component({
-  selector: "timing",
-  styleUrls: ["./timing.component.scss"],
-  templateUrl: "./timing.component.html",
+  selector: "trackmap",
+  styleUrls: ["./trackmap.component.scss"],
+  templateUrl: "./trackmap.component.html",
 })
 
-export class TimingComponent implements OnInit {
+export class TrackMapComponent implements OnInit {
   public timingObjects: any[] = [];
 
   constructor(private socketService: SocketService) {}
