@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import * as io from "socket.io-client";
-import { AppConfig } from './config/app.config';
+import { AppConfig } from "./config/app.config";
 
 @Injectable({
   providedIn: "root",
