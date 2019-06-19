@@ -6,11 +6,11 @@ import { Dash } from "./classes/dash";
 
 // get port number from cmd arguments
 const port = process.argv[2];
-
 const app: any = express();
-app.set("port", process.env.PORT || port);
 const http: any = require("http").Server(app);
-let io: SocketIO.Server = require("socket.io")(http);
+const io: SocketIO.Server = require("socket.io")(http);
+
+app.set("port", process.env.PORT || port);
 app.get("/", function (req: any, res: any): void {
   res.sendFile(__dirname, "index.html");
 });
@@ -22,10 +22,9 @@ const dash = new Dash();
 
 //#region socket methods
 const web: SocketIO.Namespace =
-  io.of("web")
-    .on("connection", (socket: any) => {
-      console.log("a user connected");
-    });
+  io.of("web").on("connection", (socket: any) => {
+    console.log("a user connected");
+  });
 
 const receiver: SocketIO.Namespace =
   io.of("receiver").on("connection", (socket: any) => {
