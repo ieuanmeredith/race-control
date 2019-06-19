@@ -9,7 +9,7 @@ const app: any = express();
 app.set("port", process.env.PORT || port);
 const http: any = require("http").Server(app);
 let io: SocketIO.Server = require("socket.io")(http);
-app.get("/", function(req: any, res: any): void {
+app.get("/", function (req: any, res: any): void {
   res.sendFile(__dirname, "index.html");
 });
 
@@ -172,20 +172,167 @@ const processPitlane = (data: any, i: number) => {
   // set pit time to 0
   // check for different lap to try and counteract telemetry gaps
   else if (!data.values.CarIdxOnPitRoad[i] && data.values.CarIdxLap[i] !== carIdxPittedLap[i]) {
-    if (carIdxPitTime[i] > 0 ) {
+    if (carIdxPitTime[i] > 0) {
       carIdxPitLastStopTime[i] = carIdxPitTime[i];
       carIdxPitTime[i] = 0;
     }
   }
 };
+
+// processes dash data and emits event to websocket
+const processDash = (data: any) => {
+  //#region process dash data
+  soc = Math.floor(data.values.EnergyERSBatteryPct * 100);
+  deploy = Math.floor(data.values.EnergyMGU_KLapDeployPct * 100);
+  flags = data.values.SessionFlags;
+  if (data.values.dcMGUKDeployFixed) {
+    deployMode = data.values.dcMGUKDeployFixed.toString();
+  }
+  trackTemp = data.values.TrackTempCrew.toFixed(2);
+  fuelRemaining = (Math.round(data.values.FuelLevel * 100) / 100).toFixed(2);
+
+  if (fuelUsageBuffer.length <= bufferLength) {
+    if (Math.floor(data.values.Speed) !== 0 && data.values.FuelLevel > 0.2) {
+      fuelUsageBuffer.push(Math.round(data.values.FuelUsePerHour * 100) / 100);
+    }
+  }
+  else {
+    fuelUsageBuffer = fuelUsageBuffer.splice(1, (bufferLength - 1));
+    fuelUsageBuffer.push(Math.round(data.values.FuelUsePerHour * 100) / 100);
+  }
+
+  if (lap !== data.values.Lap) {
+    if (lap === 0) {
+      lap = data.values.Lap;
+    }
+    else {
+      lap = data.values.Lap;
+      const lapTemp = Math.round(data.values.LapLastLapTime * 100) / 100;
+      if (lapTemp > 0 && lapTimeArray.indexOf(lapTemp) === -1) {
+        lapTimeArray.push(lapTemp);
+      }
+
+      if (lapTimeArray.length > 2) {
+        estLapTime = getAvgLap();
+      }
+
+      fuelLapsRemaining < 2 ? boxboxbox = true : boxboxbox = false;
+    }
+    const dto: Dto = new Dto();
+    dto.values.Throttle = data.values.Throttle;
+    dto.values.Brake = data.values.Brake;
+    dto.values.SoC = soc.toString();
+    dto.values.Deploy = deploy.toString();
+    dto.values.FuelLevel = data.values.FuelLevel.toFixed(2);
+    dto.values.FuelLapsLeft = fuelLapsRemaining.toFixed(2);
+    dto.values.FuelPerLap = fuelPerLap.toString();
+    dto.values.Delta = deltaToSesBest;
+    dto.values.BoxBoxBox = boxboxbox;
+    dto.values.Flags = flags;
+    dto.values.Gear = gear;
+    dto.values.Temp = trackTemp;
+    dto.values.SessionTimeRemain = timeLeft;
+    dto.values.DeployMode = deployMode;
+    dto.values.Speed = (data.values.Speed * 3.6).toFixed(0) + " kph ";
+    // convert input to useful value for animating rotation
+    dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14) * -1;
+    io.of("web").emit("telemetry_message", dto);
+  }
+
+  if (maxFuel > 0 && estLapTime > 0) {
+    const lapsPerHour = 3600 / estLapTime;
+    const fuelPerHour = getAvgFuelPerHour();
+    const localFuelPerLap = fuelPerHour / lapsPerHour;
+    // minus 0.2L in kg to exclude last 0.2l from calculations
+    fuelLapsRemaining = (((data.values.FuelLevel * fuelWeightRatio) - (0.2 * fuelWeightRatio)) / localFuelPerLap);
+    fuelPerLap = (data.values.FuelLevel / fuelLapsRemaining).toFixed(2);
+    if (fuelLapsRemaining > 2) { boxboxbox = false; }
+  }
+
+  const delta = data.values.LapDeltaToSessionBestLap.toFixed(2);
+  deltaToSesBest = `${Number(delta) > 0 ? "+" : ""}${delta}`;
+
+  const secondsLeft = Math.floor(data.values.SessionTimeRemain);
+  const hours = Math.floor(secondsLeft / 3600);
+  const minutes = Math.floor((secondsLeft / 60) - hours * 60);
+  const seconds = secondsLeft - Math.floor((secondsLeft / 60)) * 60;
+  timeLeft = `${pad(hours.toString(), 2, 0)}:${pad(minutes.toString(), 2, 0)}:${pad(seconds.toString(), 2, 0)}`;
+  rpm = data.values.RPM;
+  gear = data.values.Gear === 0 ? "N"
+    : data.values.Gear === -1 ? "R"
+      : data.values.Gear.toString();
+  //#endregion
+};
+
+// processes timing data and emits event to websocket
+const processTiming = (data: any) => {
+  let timingObjects = [];
+  // process and send timing info
+  if (drivers.length > 0) {
+    // process each acive in session (non-spectating/non-dc) driver
+    for (let i = 0; i < drivers.length; i++) {
+      if (drivers[i].CarIsPaceCar === 0
+        && drivers[i].IsSpectator === 0
+        && data.values.CarIdxPosition[i] > 0) {
+        processLapChange(data, i);
+        processPitlane(data, i);
+        timingObjects.push({
+          "Name": drivers[i].TeamName,
+          "DriverName": drivers[i].UserName,
+          "CarNum": drivers[i].CarNumber,
+          "Position": data.values.CarIdxPosition[i],
+          "ClassPosition": data.values.CarIdxClassPosition[i],
+          "OnPitRoad": data.values.CarIdxOnPitRoad[i],
+          "ClassColour": "#" + drivers[i].CarClassColor.toString(16),
+          "IRating": drivers[i].IRating,
+          "LicString": drivers[i].LicString,
+          "LicColor": "#" + drivers[i].LicColor.toString(16),
+          "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
+          "PitTime": carIdxPitTime[i].toFixed(1),
+          "PitLastTime": carIdxPitLastStopTime[i] ? carIdxPitLastStopTime[i].toFixed(1) : 0,
+          "PittedLap": carIdxPittedLap[i],
+          "CarLap": data.values.CarIdxLap[i],
+          "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
+          "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
+          "TrackSurf": data.values.CarIdxTrackSurface[i],
+          "Gap": carIdxGapInfront[i],
+          "DistDegree": 3.6 * (data.values.CarIdxLapDistPct[i] * 100)
+        });
+      }
+    }
+    timingObjects = timingObjects.sort(
+      (a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0)
+    );
+  }
+  io.of("web").emit("timing_message", timingObjects);
+};
+
+const checkSessionState = (data: any) => {
+  // check for session change i.e. practice -> race
+  if (currentSessionNum !== data.values.SessionNum) {
+    // reset timing data
+    carIdxCurrentLap = [];
+    carIdxCurrentLapStartTime = [];
+    carIdxLapTimes = [];
+    carIdxPittedLap = [];
+    carIdxPittedStart = [];
+    carIdxPitTime = [];
+    carIdxPitLapRecord = [];
+    carIdxPitLastStopTime = [];
+    carIdxStintRecord = [];
+    // set current session num
+    currentSessionNum = data.values.SessionNum;
+  }
+};
+
 //#endregion
 
 //#region socket methods
 const web: SocketIO.Namespace =
   io.of("web")
-  .on("connection", (socket: any) => {
-    console.log("a user connected");
-});
+    .on("connection", (socket: any) => {
+      console.log("a user connected");
+    });
 
 const receiver: SocketIO.Namespace =
   io.of("receiver").on("connection", (socket: any) => {
@@ -203,145 +350,11 @@ const receiver: SocketIO.Namespace =
         }
       }
       if (activeDriver) {
-        let timingObjects = [];
         const data: ITelemetry = msg.data;
-        // check for session change i.e. practice -> race
-        if (currentSessionNum !== data.values.SessionNum) {
-          // reset timing data
-          carIdxCurrentLap = [];
-          carIdxCurrentLapStartTime = [];
-          carIdxLapTimes = [];
-          carIdxPittedLap = [];
-          carIdxPittedStart = [];
-          carIdxPitTime = [];
-          carIdxPitLapRecord = [];
-          carIdxPitLastStopTime = [];
-          carIdxStintRecord = [];
-          // set current session num
-          currentSessionNum = data.values.SessionNum;
-        }
+        checkSessionState(data);
 
-        //#region process dash data
-        soc = Math.floor(data.values.EnergyERSBatteryPct *  100);
-        deploy = Math.floor(data.values.EnergyMGU_KLapDeployPct * 100);
-        flags = data.values.SessionFlags;
-        if (data.values.dcMGUKDeployFixed) {
-          deployMode = data.values.dcMGUKDeployFixed.toString();
-        }
-        trackTemp = data.values.TrackTempCrew.toFixed(2);
-        fuelRemaining = (Math.round(data.values.FuelLevel * 100) / 100).toFixed(2);
-
-        if (fuelUsageBuffer.length <= bufferLength) {
-          if (Math.floor(data.values.Speed) !== 0 && data.values.FuelLevel > 0.2) {
-            fuelUsageBuffer.push(Math.round(data.values.FuelUsePerHour * 100) / 100);
-          }
-        }
-        else {
-          fuelUsageBuffer = fuelUsageBuffer.splice(1, (bufferLength - 1));
-          fuelUsageBuffer.push(Math.round(data.values.FuelUsePerHour * 100) / 100);
-        }
-
-        if (lap !== data.values.Lap) {
-          if (lap === 0) {
-            lap = data.values.Lap;
-          }
-          else {
-            lap = data.values.Lap;
-            const lapTemp = Math.round(data.values.LapLastLapTime * 100) / 100;
-            if (lapTemp > 0 && lapTimeArray.indexOf(lapTemp) === -1) {
-              lapTimeArray.push(lapTemp);
-            }
-
-            if (lapTimeArray.length > 2) {
-              estLapTime = getAvgLap();
-            }
-
-            fuelLapsRemaining < 2 ? boxboxbox = true : boxboxbox = false;
-          }
-        }
-
-        if (maxFuel > 0 && estLapTime > 0) {
-          const lapsPerHour = 3600 / estLapTime;
-          const fuelPerHour = getAvgFuelPerHour();
-          const localFuelPerLap = fuelPerHour / lapsPerHour;
-          // minus 0.2L in kg to exclude last 0.2l from calculations
-          fuelLapsRemaining = (((data.values.FuelLevel * fuelWeightRatio) - (0.2 * fuelWeightRatio)) / localFuelPerLap);
-          fuelPerLap = (data.values.FuelLevel / fuelLapsRemaining).toFixed(2);
-          if (fuelLapsRemaining > 2) { boxboxbox = false; }
-        }
-
-        const delta = data.values.LapDeltaToSessionBestLap.toFixed(2);
-        deltaToSesBest = `${Number(delta) > 0 ? "+" : ""}${delta}`;
-
-        const secondsLeft = Math.floor(data.values.SessionTimeRemain);
-        const hours = Math.floor(secondsLeft / 3600);
-        const minutes = Math.floor((secondsLeft / 60) - hours * 60);
-        const seconds = secondsLeft - Math.floor((secondsLeft / 60)) * 60;
-        timeLeft = `${pad(hours.toString(), 2, 0)}:${pad(minutes.toString(), 2, 0)}:${pad(seconds.toString(), 2, 0)}`;
-        rpm = data.values.RPM;
-        gear = data.values.Gear === 0 ? "N"
-        : data.values.Gear === -1 ? "R"
-        : data.values.Gear.toString();
-        //#endregion
-
-        const dto: Dto = new Dto();
-        dto.values.Throttle = data.values.Throttle;
-        dto.values.Brake = data.values.Brake;
-        dto.values.SoC = soc.toString();
-        dto.values.Deploy = deploy.toString();
-        dto.values.FuelLevel = data.values.FuelLevel.toFixed(2);
-        dto.values.FuelLapsLeft = fuelLapsRemaining.toFixed(2);
-        dto.values.FuelPerLap = fuelPerLap.toString();
-        dto.values.Delta = deltaToSesBest;
-        dto.values.BoxBoxBox = boxboxbox;
-        dto.values.Flags = flags;
-        dto.values.Gear = gear;
-        dto.values.Temp = trackTemp;
-        dto.values.SessionTimeRemain = timeLeft;
-        dto.values.DeployMode = deployMode;
-        dto.values.Speed = (data.values.Speed * 3.6).toFixed(0) + " kph ";
-        // convert input to useful value for animating rotation
-        dto.values.SteeringWheelAngle = ((data.values.SteeringWheelAngle * 180) / 3.14 ) * -1;
-        io.of("web").emit("telemetry_message", dto);
-
-        // process and send timing info
-        if (drivers.length > 0) {
-          // process each acive in session (non-spectating/non-dc) driver
-          for (let i = 0; i < drivers.length; i++) {
-            if (drivers[i].CarIsPaceCar === 0
-              && drivers[i].IsSpectator === 0
-              && data.values.CarIdxPosition[i] > 0) {
-              processLapChange(data, i);
-              processPitlane(data, i);
-              timingObjects.push({
-                "Name": drivers[i].TeamName,
-                "DriverName": drivers[i].UserName,
-                "CarNum": drivers[i].CarNumber,
-                "Position": data.values.CarIdxPosition[i],
-                "ClassPosition": data.values.CarIdxClassPosition[i],
-                "OnPitRoad": data.values.CarIdxOnPitRoad[i],
-                "ClassColour": "#" + drivers[i].CarClassColor.toString(16),
-                "IRating": drivers[i].IRating,
-                "LicString": drivers[i].LicString,
-                "LicColor": "#" + drivers[i].LicColor.toString(16),
-                "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
-                "PitTime": carIdxPitTime[i].toFixed(1),
-                "PitLastTime": carIdxPitLastStopTime[i] ? carIdxPitLastStopTime[i].toFixed(1) : 0,
-                "PittedLap": carIdxPittedLap[i],
-                "CarLap": data.values.CarIdxLap[i],
-                "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
-                "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
-                "TrackSurf": data.values.CarIdxTrackSurface[i],
-                "Gap": carIdxGapInfront[i],
-                "DistDegree": 3.6 * (data.values.CarIdxLapDistPct[i] * 100)
-              });
-            }
-          }
-          timingObjects = timingObjects.sort(
-            (a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0)
-          );
-        }
-        io.of("web").emit("timing_message", timingObjects);
+        processDash(data);
+        processTiming(data);
       }
     });
 
@@ -375,9 +388,9 @@ const receiver: SocketIO.Namespace =
         //#endregion
       }
     });
-});
+  });
 
-http.listen(port, function(): void {
+http.listen(port, function (): void {
   console.log(`listening on *:${port}`);
 });
 //#endregion
