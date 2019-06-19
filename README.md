@@ -42,11 +42,13 @@ There should also be a 1-to-1 correlation between cars and web apps. Each web ap
 
 ## Getting Started
 
-1. Download the latest release of the compiled Transmitter app from the **releases** section of this repo, or build it yourself by running `npm run make` from the 'src/electron/race-control-transmitter' directory and running the compiled .exe in the generated '/out' folder.
+1.[Transmitter] Download the latest release of the compiled Transmitter app from the **releases** section of this repo, or build it yourself by running `npm run make` from the 'src/electron/race-control-transmitter' directory and running the compiled .exe in the generated '/out' folder.
 
-2. Using a suitable server for running node.js applications. Make a copy of the 'src/server/' directory to the server and run `ts-node index.ts XXXX` where 'XXXX' is the port number you wish to run the server on. I suggest using PM2 to easily spin up several instances running on different port number if you are running a team with multiple cars racing.
+2.[Server] Using a suitable server for running node.js applications. Make a copy of the 'src/server/' directory to the server and run `ts-node index.ts XXXX` where 'XXXX' is the port number you wish to run the server on. I suggest using PM2 to easily spin up several instances running on different port number if you are running a team with multiple cars racing.
 
-3. In it's current form the Socket Service found under 'src/web/race-control-app/' has a hard coded url template that should use the address of the server and the port number used in point 2 to connect to the server. Run `npm build --prod` to generate the Angular 'dist' folder. You will need to generate a 'dist' folder for each instance of the web app you want to run, changing the socket service to use the correct url each time before building. 
+3.[Web app] There are 3 configurations by default, car1 car2 and car3. Configurations are setup in the /environments folder, angular.json and /assets/config/ folders. The url in each config file in /assets/config should correspond to the url of a unique server set up in step 2.
+
+Then run `ng build --configuration=XXXX` where XXXX is the configuration you wish to build i.e. car1, to generate the dist folder for the web app. Rename the folder within /dist/ to correspond to the configuration e.g race-control-app-1, then run ng build for the next configuration until you have generated all desired dist folders.
 
 Upload these folders to your server and serve as necessary, ensuring each instance uses a unique port. Again I recommend using PM2 in combination with the npm package 'http-server'.
 
