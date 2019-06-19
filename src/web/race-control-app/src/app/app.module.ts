@@ -15,9 +15,11 @@ export function initializeApp(appConfig: AppConfig) {
 @NgModule({
   providers: [
     AppConfig,
-      { provide: APP_INITIALIZER,
+      {
+        provide: APP_INITIALIZER,
         useFactory: initializeApp,
-        deps: [AppConfig], multi: true }
+        deps: [AppConfig], multi: true
+      }
   ],
   bootstrap: [RouterComponent],
   declarations: [
