@@ -143,6 +143,9 @@ const processPitlane = (data: any, i: number) => {
   if (!carIdxPitTime[i]) {
     carIdxPitTime[i] = 0;
   }
+  if (data.values.CarIdxLap[i] === -1) {
+    return;
+  }
   // if car is on pit road and counter is 0
   // car has just entered the pits
   if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] === 0 && data.values.CarIdxTrackSurface[i] === "InPitStall") {
@@ -200,7 +203,6 @@ const receiver: SocketIO.Namespace =
         }
       }
       if (activeDriver) {
-
         let timingObjects = [];
         const data: ITelemetry = msg.data;
         // check for session change i.e. practice -> race
