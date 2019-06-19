@@ -1,6 +1,7 @@
 import * as express from "express";
 import { ITelemetry } from "./classes/telemetry";
 import { Dto } from "./classes/dto";
+import { Timing } from "./classes/timing";
 
 // get port number from cmd arguments
 const port = process.argv[2];
@@ -15,24 +16,7 @@ app.get("/", function (req: any, res: any): void {
 
 let sessions: any[] = [];
 
-//#region timing state variables
-let drivers: any[] = [];
-let currentSessionNum: number = 0;
-
-// lap time array definitions
-let carIdxCurrentLap: number[] = [];
-let carIdxCurrentLapStartTime: number[] = [];
-let carIdxLapTimes: string[][] = [];
-let carIdxGapInfront: string[] = [];
-
-let carIdxPittedLap: number[] = [];
-let carIdxPittedStart: number[] = [];
-let carIdxPitTime: number[] = [];
-let carIdxPitLapRecord: number[][] = [];
-let carIdxPitLastStopTime: number[] = [];
-
-let carIdxStintRecord: number[][] = [];
-//#endregion
+const timing = new Timing();
 
 //#region dash state variables
 let soc: number = 0;
@@ -82,101 +66,6 @@ const getAvgFuelPerHour = (): number => {
     sum += fuelUsageBuffer[i];
   }
   return sum / fuelUsageBuffer.length;
-};
-
-const processLapChange = (data: any, i: number) => {
-  if (!carIdxLapTimes[i]) {
-    carIdxLapTimes[i] = [];
-  }
-  if (data.values.CarIdxLap[i] === -1) {
-    return;
-  }
-  // if telemetry lap is different to lap in memory
-  // new lap started, calculate and insert lap time to array
-  if (carIdxCurrentLap[i] !== data.values.CarIdxLap[i]) {
-    // calculate lap time
-    const sessionTime = data.values.SessionTime;
-    const startTime = carIdxCurrentLapStartTime[i];
-    if (!startTime) {
-      carIdxCurrentLapStartTime[i] = sessionTime;
-      carIdxCurrentLap[i] = data.values.CarIdxLap[i];
-      return;
-    }
-    if (!carIdxLapTimes[i]) {
-      carIdxLapTimes[i] = [];
-    }
-    const lapTimeSecs = (sessionTime - startTime);
-    const mins = lapTimeSecs / 60;
-    const seconds = lapTimeSecs - (60 * Math.floor(mins));
-    carIdxLapTimes[i].push(`${Math.floor(mins).toFixed(0)}:${Math.floor(seconds) >= 10 ? seconds.toFixed(2) : "0" + seconds.toFixed(2)}`);
-    // insert lap time to array for carIdX
-    carIdxCurrentLapStartTime[i] = sessionTime;
-    // update current lap to new value
-    carIdxCurrentLap[i] = data.values.CarIdxLap[i];
-
-    // process gap on lap change
-    const carIdxPosition = data.values.CarIdxPosition[i];
-    if (carIdxPosition === 1) { carIdxGapInfront[i] = "---"; }
-    else {
-      for (let p = 0; p < data.values.CarIdxPosition.length; p++) {
-        if (data.values.CarIdxPosition[p] === (carIdxPosition - 1)) {
-          if (data.values.CarIdxLap[i] === data.values.CarIdxLap[p]) {
-            carIdxGapInfront[i] = (carIdxCurrentLapStartTime[i] - carIdxCurrentLapStartTime[p]).toFixed(2);
-          }
-          else {
-            carIdxGapInfront[i] = `${data.values.CarIdxLap[p] - data.values.CarIdxLap[i]} L`;
-          }
-          break;
-        }
-      }
-    }
-  }
-};
-
-const processPitlane = (data: any, i: number) => {
-  if (!carIdxPitLapRecord[i]) {
-    carIdxPitLapRecord[i] = [];
-  }
-  if (!carIdxStintRecord[i]) {
-    carIdxStintRecord[i] = [];
-  }
-  if (!carIdxPitTime[i]) {
-    carIdxPitTime[i] = 0;
-  }
-  if (data.values.CarIdxLap[i] === -1) {
-    return;
-  }
-  // if car is on pit road and counter is 0
-  // car has just entered the pits
-  if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] === 0 && data.values.CarIdxTrackSurface[i] === "InPitStall") {
-    if (carIdxPitLapRecord[i].length === 0) {
-      carIdxStintRecord[i].push(data.values.CarIdxLap[i]);
-    } else {
-      carIdxStintRecord[i].push(data.values.CarIdxLap[i] -
-        carIdxPitLapRecord[i][carIdxPitLapRecord[i].length - 1]);
-    }
-    carIdxPittedStart[i] = data.values.SessionTime;
-    carIdxPittedLap[i] = data.values.CarIdxLap[i];
-    carIdxPitLapRecord[i].push(data.values.CarIdxLap[i]);
-    // set time in pits to non 0 value
-    carIdxPitTime[i] = 0.1;
-  }
-  // if car is on pit road and counter is > 0
-  // car is currently in the pits
-  else if (data.values.CarIdxOnPitRoad[i] && carIdxPitTime[i] > 0 && data.values.CarIdxTrackSurface[i] === "InPitStall") {
-    const intermediate = (data.values.SessionTime) - (carIdxPittedStart[i]);
-    carIdxPitTime[i] =
-      intermediate > 0.1 ? intermediate : 0.1;
-  }
-  // if car is not on pit road
-  // set pit time to 0
-  // check for different lap to try and counteract telemetry gaps
-  else if (!data.values.CarIdxOnPitRoad[i] && data.values.CarIdxLap[i] !== carIdxPittedLap[i]) {
-    if (carIdxPitTime[i] > 0) {
-      carIdxPitLastStopTime[i] = carIdxPitTime[i];
-      carIdxPitTime[i] = 0;
-    }
-  }
 };
 
 // processes dash data and emits event to websocket
@@ -264,67 +153,6 @@ const processDash = (data: any) => {
   //#endregion
 };
 
-// processes timing data and emits event to websocket
-const processTiming = (data: any) => {
-  let timingObjects = [];
-  // process and send timing info
-  if (drivers.length > 0) {
-    // process each acive in session (non-spectating/non-dc) driver
-    for (let i = 0; i < drivers.length; i++) {
-      if (drivers[i].CarIsPaceCar === 0
-        && drivers[i].IsSpectator === 0
-        && data.values.CarIdxPosition[i] > 0) {
-        processLapChange(data, i);
-        processPitlane(data, i);
-        timingObjects.push({
-          "Name": drivers[i].TeamName,
-          "DriverName": drivers[i].UserName,
-          "CarNum": drivers[i].CarNumber,
-          "Position": data.values.CarIdxPosition[i],
-          "ClassPosition": data.values.CarIdxClassPosition[i],
-          "OnPitRoad": data.values.CarIdxOnPitRoad[i],
-          "ClassColour": "#" + drivers[i].CarClassColor.toString(16),
-          "IRating": drivers[i].IRating,
-          "LicString": drivers[i].LicString,
-          "LicColor": "#" + drivers[i].LicColor.toString(16),
-          "EstTime": data.values.CarIdxEstTime[i].toFixed(1),
-          "PitTime": carIdxPitTime[i].toFixed(1),
-          "PitLastTime": carIdxPitLastStopTime[i] ? carIdxPitLastStopTime[i].toFixed(1) : 0,
-          "PittedLap": carIdxPittedLap[i],
-          "CarLap": data.values.CarIdxLap[i],
-          "StintLength": carIdxStintRecord[i][carIdxStintRecord[i].length - 1],
-          "LastLap": carIdxLapTimes[i][carIdxLapTimes[i].length - 1],
-          "TrackSurf": data.values.CarIdxTrackSurface[i],
-          "Gap": carIdxGapInfront[i],
-          "DistDegree": 3.6 * (data.values.CarIdxLapDistPct[i] * 100)
-        });
-      }
-    }
-    timingObjects = timingObjects.sort(
-      (a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0)
-    );
-  }
-  io.of("web").emit("timing_message", timingObjects);
-};
-
-const checkSessionState = (data: any) => {
-  // check for session change i.e. practice -> race
-  if (currentSessionNum !== data.values.SessionNum) {
-    // reset timing data
-    carIdxCurrentLap = [];
-    carIdxCurrentLapStartTime = [];
-    carIdxLapTimes = [];
-    carIdxPittedLap = [];
-    carIdxPittedStart = [];
-    carIdxPitTime = [];
-    carIdxPitLapRecord = [];
-    carIdxPitLastStopTime = [];
-    carIdxStintRecord = [];
-    // set current session num
-    currentSessionNum = data.values.SessionNum;
-  }
-};
-
 //#endregion
 
 //#region socket methods
@@ -343,18 +171,19 @@ const receiver: SocketIO.Namespace =
       // if driver_id is active driver,
       // use their telemetry data
       let activeDriver: boolean = false;
-      for (let i = 0; i < drivers.length; i++) {
-        if (Number(driver_id) === drivers[i].UserID) {
+      for (let i = 0; i < timing.Drivers.length; i++) {
+        if (Number(driver_id) === timing.Drivers[i].UserID) {
           activeDriver = true;
           break;
         }
       }
       if (activeDriver) {
         const data: ITelemetry = msg.data;
-        checkSessionState(data);
+        timing.CheckSessionState(data);
 
         processDash(data);
-        processTiming(data);
+
+        io.of("web").emit("timing_message", timing.GetTimingObjArray(data));
       }
     });
 
@@ -375,8 +204,8 @@ const receiver: SocketIO.Namespace =
         if (sessions !== session.data.SessionInfo.Sessions) {
           sessions = session.data.SessionInfo.Sessions;
         }
-        if (drivers !== session.data.DriverInfo.Drivers) {
-          drivers = session.data.DriverInfo.Drivers;
+        if (timing.Drivers !== session.data.DriverInfo.Drivers) {
+          timing.Drivers = session.data.DriverInfo.Drivers;
         }
         //#region taking session values for dash
         if (fuelWeightRatio !== session.data.DriverInfo.DriverCarFuelKgPerLtr) {
