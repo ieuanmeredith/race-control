@@ -1,30 +1,30 @@
 import { Dto } from "./dto";
 
 export class Dash {
-  public Soc: number = 0;
-  public Deploy: number = 0;
-  public Flags: string[] = [];
-  public DeltaToSesBest: string = "+0.00";
-  public TimeLeft: string = "00:00:00";
-  public TrackTemp: string = "N/A";
-  public DeployMode: string = "0";
-  public Lap: number = 0;
-  public LapTimeArray: number[] = [];
+  private Soc: number = 0;
+  private Deploy: number = 0;
+  private Flags: string[] = [];
+  private DeltaToSesBest: string = "+0.00";
+  private TimeLeft: string = "00:00:00";
+  private TrackTemp: string = "N/A";
+  private DeployMode: string = "0";
+  private Lap: number = 0;
+  private LapTimeArray: number[] = [];
 
-  public BufferLength: number = 18000;
+  private BufferLength: number = 18000;
 
-  public EstLapTime: number = 0;
-  public MaxFuel: number = 0;
-  public FuelUsageBuffer: number[] = [];
-  public FuelLapsRemaining: number = 0;
-  public FuelPerLap: string | number = 0;
-  public FuelRemaining: string | number = 0;
-  public Boxboxbox: boolean = false;
+  private EstLapTime: number = 0;
+  private MaxFuel: number = 0;
+  private FuelUsageBuffer: number[] = [];
+  private FuelLapsRemaining: number = 0;
+  private FuelPerLap: string | number = 0;
+  private FuelRemaining: string | number = 0;
+  private Boxboxbox: boolean = false;
 
-  public Rpm: number = 0;
-  public FuelWeightRatio: number = 0.75;
+  private Rpm: number = 0;
+  private FuelWeightRatio: number = 0.75;
 
-  public Gear: string = "N";
+  private Gear: string = "N";
 
   public GetDashDto(data: any): Dto {
     this.Soc = Math.floor(data.values.EnergyERSBatteryPct * 100);
@@ -134,5 +134,14 @@ export class Dash {
       sum += this.FuelUsageBuffer[i];
     }
     return sum / this.FuelUsageBuffer.length;
+  }
+
+  public SetDataFromSession(session: any) {
+    if (this.FuelWeightRatio !== session.data.DriverInfo.DriverCarFuelKgPerLtr) {
+      this.FuelWeightRatio = session.data.DriverInfo.DriverCarFuelKgPerLtr;
+    }
+    this.MaxFuel = session.data.DriverInfo.DriverCarFuelMaxLtr * this.FuelWeightRatio;
+
+    if (this.EstLapTime === 0) { this.EstLapTime = session.data.DriverInfo.DriverCarEstLapTime; }
   }
 }

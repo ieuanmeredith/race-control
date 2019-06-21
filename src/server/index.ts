@@ -31,16 +31,9 @@ const receiver: SocketIO.Namespace =
     console.log("a transmitter connected");
 
     socket.on("telemetry", (msg: any) => {
-      const driver_id: any = msg.driver_id;
-      // if driver_id is active driver,
-      // use their telemetry data
-      let activeDriver: boolean = false;
-      for (let i = 0; i < timing.Drivers.length; i++) {
-        if (Number(driver_id) === timing.Drivers[i].UserID) {
-          activeDriver = true;
-          break;
-        }
-      }
+      const driverId: number = Number(msg.driver_id);
+      // if driver is active use their telemetry data
+      let activeDriver: boolean = timing.IsActiveDriver(driverId);
       if (activeDriver) {
         const data: ITelemetry = msg.data;
         io.of("web").emit("telemetry_message", dash.GetDashDto(data));
@@ -65,17 +58,8 @@ const receiver: SocketIO.Namespace =
         if (sessions !== session.data.SessionInfo.Sessions) {
           sessions = session.data.SessionInfo.Sessions;
         }
-        if (timing.Drivers !== session.data.DriverInfo.Drivers) {
-          timing.Drivers = session.data.DriverInfo.Drivers;
-        }
-        //#region taking session values for dash
-        if (dash.FuelWeightRatio !== session.data.DriverInfo.DriverCarFuelKgPerLtr) {
-          dash.FuelWeightRatio = session.data.DriverInfo.DriverCarFuelKgPerLtr;
-        }
-        dash.MaxFuel = session.data.DriverInfo.DriverCarFuelMaxLtr * dash.FuelWeightRatio;
-
-        if (dash.EstLapTime === 0) { dash.EstLapTime = session.data.DriverInfo.DriverCarEstLapTime; }
-        //#endregion
+        timing.SetDataFromSession(session);
+        dash.SetDataFromSession(session);
       }
     });
   });

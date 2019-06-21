@@ -1,20 +1,20 @@
 export class Timing {
-  public Drivers: any[] = [];
-  public CurrentSessionNum: number = 0;
+  private Drivers: any[] = [];
+  private CurrentSessionNum: number = 0;
 
   // lap time array definitions
-  public CarIdxCurrentLap: number[] = [];
-  public CarIdxCurrentLapStartTime: number[] = [];
-  public CarIdxLapTimes: string[][] = [];
-  public CarIdxGapInfront: string[] = [];
+  private CarIdxCurrentLap: number[] = [];
+  private CarIdxCurrentLapStartTime: number[] = [];
+  private CarIdxLapTimes: string[][] = [];
+  private CarIdxGapInfront: string[] = [];
 
-  public CarIdxPittedLap: number[] = [];
-  public CarIdxPittedStart: number[] = [];
-  public CarIdxPitTime: number[] = [];
-  public CarIdxPitLapRecord: number[][] = [];
-  public CarIdxPitLastStopTime: number[] = [];
+  private CarIdxPittedLap: number[] = [];
+  private CarIdxPittedStart: number[] = [];
+  private CarIdxPitTime: number[] = [];
+  private CarIdxPitLapRecord: number[][] = [];
+  private CarIdxPitLastStopTime: number[] = [];
 
-  public CarIdxStintRecord: number[][] = [];
+  private CarIdxStintRecord: number[][] = [];
 
   private ProcessLapChange (data: any, i: number) {
     if (!this.CarIdxLapTimes[i]) {
@@ -126,6 +126,23 @@ export class Timing {
       this.CarIdxStintRecord = [];
       // set current session num
       this.CurrentSessionNum = data.values.SessionNum;
+    }
+  }
+
+  public IsActiveDriver (driverId: number): boolean {
+    let activeDriver: boolean = false;
+    for (let i = 0; i < this.Drivers.length; i++) {
+      if (driverId === this.Drivers[i].UserID) {
+        activeDriver = true;
+        break;
+      }
+    }
+    return activeDriver;
+  }
+
+  public SetDataFromSession (session: any) {
+    if (this.Drivers !== session.data.DriverInfo.Drivers) {
+      this.Drivers = session.data.DriverInfo.Drivers;
     }
   }
 
