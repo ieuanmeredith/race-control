@@ -111,7 +111,7 @@ export class Timing {
     }
   }
 
-  public CheckSessionState (data: any) {
+  private CheckSessionState (data: any) {
     // check for session change i.e. practice -> race
     if (this.CurrentSessionNum !== data.values.SessionNum) {
       // reset timing data
@@ -130,6 +130,8 @@ export class Timing {
   }
 
   public GetTimingObjArray (data: any): object[] {
+    this.CheckSessionState(data);
+
     let timingObjects = [];
     // process and send timing info
     if (this.Drivers.length > 0) {
@@ -164,7 +166,7 @@ export class Timing {
           });
         }
       }
-      timingObjects = timingObjects.sort(
+      timingObjects.sort(
         (a, b) => (a.Position > b.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0)
       );
     }

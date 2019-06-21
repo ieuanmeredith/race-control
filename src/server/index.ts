@@ -43,8 +43,6 @@ const receiver: SocketIO.Namespace =
       }
       if (activeDriver) {
         const data: ITelemetry = msg.data;
-        timing.CheckSessionState(data);
-
         io.of("web").emit("telemetry_message", dash.GetDashDto(data));
         io.of("web").emit("timing_message", timing.GetTimingObjArray(data));
       }
