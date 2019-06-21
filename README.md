@@ -76,3 +76,4 @@ Each car will have an instance of the web app running for their car. Each compil
 Each web app can be accessed via '/' and '/timing' to view the data being transmitted from the active driver. i.e.
 - http://123.123.1.1:3003/
 - http://123.123.1.1:3003/timing
+- http://123.123.1.1:3003/track
