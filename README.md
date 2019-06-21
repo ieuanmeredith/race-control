@@ -4,6 +4,8 @@
 
 ![race control](https://i.imgur.com/dsGJd8a.png)
 
+![race control](https://i.gyazo.com/8653d386fab034c3f755912f0c1fbd11.gif)
+
 This project is designed to provide a means to view real time telemetry and timing data from the iRacing simulator. Is it currently a work in progress and any/all aspects of the design and running procedure are likely to change at any time.
 
 The context assumed while the system is in use is that all drivers for a car are connected to the same session and only 1 driver is actively driving.
