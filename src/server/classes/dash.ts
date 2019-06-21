@@ -17,8 +17,8 @@ export class Dash {
   private MaxFuel: number = 0;
   private FuelUsageBuffer: number[] = [];
   private FuelLapsRemaining: number = 0;
-  private FuelPerLap: string | number = 0;
-  private FuelRemaining: string | number = 0;
+  private FuelPerLap: string = "";
+  private FuelRemaining: string = "";
   private Boxboxbox: boolean = false;
 
   private Rpm: number = 0;
@@ -97,9 +97,9 @@ export class Dash {
     dto.values.Brake = data.values.Brake;
     dto.values.SoC = this.Soc.toString();
     dto.values.Deploy = this.Deploy.toString();
-    dto.values.FuelLevel = data.values.FuelLevel.toFixed(2);
+    dto.values.FuelLevel = this.FuelRemaining;
     dto.values.FuelLapsLeft = this.FuelLapsRemaining.toFixed(2);
-    dto.values.FuelPerLap = this.FuelPerLap.toString();
+    dto.values.FuelPerLap = this.FuelPerLap;
     dto.values.Delta = this.DeltaToSesBest;
     dto.values.BoxBoxBox = this.Boxboxbox;
     dto.values.Flags = this.Flags;
