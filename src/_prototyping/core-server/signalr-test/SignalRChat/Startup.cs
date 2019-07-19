@@ -63,6 +63,7 @@ namespace SignalRChat
             {
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<MegaHub>("/megaHub");
             });
         }
     }
