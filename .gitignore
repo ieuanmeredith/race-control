@@ -69,3 +69,6 @@ src/_prototyping/nodesdk/package-lock.json
 /src/_prototyping/core-server/basic-socket-test/obj
 /src/_prototyping/core-server/basic-socket-test/.vscode
 /src/_prototyping/core-server/basic-socket-test/bin
+/src/_prototyping/core-server/signalr-test/SignalRChat/obj
+/src/_prototyping/core-server/signalr-test/SignalRChat/.vscode
+/src/_prototyping/core-server/signalr-test/SignalRChat/bin
