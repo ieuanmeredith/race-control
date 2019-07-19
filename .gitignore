@@ -66,3 +66,6 @@ src/_prototyping/nodesdk/package-lock.json
 /src/_prototyping/blazor/timing/timing.Client/obj
 /src/_prototyping/blazor/timing/timing.Client/bin
 /src/electron/race-control-transmitter/out
+/src/_prototyping/core-server/basic-socket-test/obj
+/src/_prototyping/core-server/basic-socket-test/.vscode
+/src/_prototyping/core-server/basic-socket-test/bin

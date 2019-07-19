@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <title>Page</title>
+</head>
+
+<body>
+  <h1>Stream to me</h1>
+  <ul id="StreamToMe"></ul>
+
+  <script>
+    (
+      function () {
+        // function that creates websocket
+        // assigns passed in function to onmessage
+        var getWebSocketMessages = function (onMessageReceived) {
+          var url = `ws://localhost:5000/api/socket/`
+          console.log('url is: ' + url);
+
+          var webSocket = new WebSocket(url);
+
+          webSocket.onmessage = onMessageReceived;
+        };
+
+        var ulElement = document.getElementById('StreamToMe');
+
+        // calls method to create websocket, passing in
+        // funciton to be called when a message is received
+        getWebSocketMessages(function (message) {
+          ulElement.innerHTML = ulElement.innerHTML += `<li>${message.data}</li>`
+        });
+      }()
+    );
+  </script>
+</body>
+
+</html>
