@@ -72,3 +72,7 @@ src/_prototyping/nodesdk/package-lock.json
 /src/_prototyping/core-server/signalr-test/SignalRChat/obj
 /src/_prototyping/core-server/signalr-test/SignalRChat/.vscode
 /src/_prototyping/core-server/signalr-test/SignalRChat/bin
+/src/_prototyping/core-server/signalr-server-test/SignalRServer/obj
+/src/_prototyping/core-server/signalr-server-test/SignalRServer/bin
+/src/_prototyping/core-server/signalr-server-test/SignalRServer/bin
+/src/_prototyping/core-server/signalr-server-test/SignalRServer/obj
