@@ -1,6 +1,6 @@
 <div>
-    <ul style="position: fixed; z-index: 2;">
-        <li id="header" style="border: 1px solid #000000;">
+    <ul style="position: fixed; z-index: 2; top: 0px;">
+        <li id="header" style="border-bottom: 1px solid #000000;">
             <div>
                 <span class="ele-title" style="min-width: 50px !important;">Car #</span>
                 <span class="ele-title" style="min-width: 50px !important;">Pos</span>
@@ -15,15 +15,16 @@
         </li>
     </ul>
     <ul style="position: relative; top: 30px; z-index: 1;">
-        <li style="border: 1px solid #000000;" *ngFor="let timing of timingObjects;">
-            <div [ngStyle]="{'background': timing.ClassColour}" style="color: #333333;">
+        <li style="border-bottom: 1px solid #000000;" *ngFor="let timing of timingObjects;">
+            <div style="color: #a1a1a1;">
 
-                <span class="ele" style="min-width: 50px !important;">
+                <span [ngStyle]="{'background': timing.ClassColour}" class="ele" style="min-width: 50px !important; color: #202020;">
                     <b style="position: relative; top: 8px; left: 5px;">{{timing.CarNum}}</b>
                 </span>
                 <!-- <span class="ele" style="min-width: 50px !important;">{{timing.Position}}</span> -->
                 <span class="ele" style="min-width: 50px !important;"><span style="position: relative; top: 8px; left: 5px;">{{timing.ClassPosition}}</span></span>
-                <span style="width: 300px; position: relative;" class="ele">                
+                <span [ngStyle]="{'color': timing.OnPitRoad ? '#d87a18' : '#a1a1a1' }"
+                      style="width: 300px; position: relative;" class="ele">                
                     <small [hidden]="timing.Name === timing.DriverName">{{timing.Name}}</small>
                     <br/>
                     <small style="position: absolute;">{{timing.DriverName}} - <strong>{{timing.IRating}}</strong> - {{timing.LicString}}</small>

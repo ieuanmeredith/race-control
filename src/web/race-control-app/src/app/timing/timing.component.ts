@@ -19,7 +19,7 @@ export class TimingComponent implements OnInit {
   private initSocketConnection(): void {
     this.socketService.initSocket();
 
-    this.socketService.onTimingMessage().subscribe((data: any) => {
+    this.socketService.onTimingMessage().subscribe((data: any[]) => {
       if (this.timingObjects.length === data.length) {
         for (let i = 0; i < this.timingObjects.length; i++) {
           this.timingObjects = data;
@@ -28,7 +28,7 @@ export class TimingComponent implements OnInit {
           }
         }
       }
-      else {
+      else if (data.length > 1) {
         this.timingObjects = data;
       }
     });
