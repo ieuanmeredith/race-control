@@ -1,5 +1,6 @@
 export class Timing {
   private Drivers: any[] = [];
+  private Sectors: any[] = [];
   private CurrentSessionNum: number = 0;
 
   // lap time array definitions
@@ -143,6 +144,10 @@ export class Timing {
   public SetDataFromSession (session: any) {
     if (this.Drivers !== session.data.DriverInfo.Drivers) {
       this.Drivers = session.data.DriverInfo.Drivers;
+    }
+
+    if (this.Sectors !== session.data.SplitTimeInfo.Sectors) {
+      this.Sectors = session.data.SplitTimeInfo.Sectors;
     }
   }
 
